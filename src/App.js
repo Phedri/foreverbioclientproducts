@@ -1,19 +1,26 @@
 import React from "react";
 
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import Header from "./components/layout/Header";
-import Advertising from "./components/layout/Advertising";
 import Footer from "./components/layout/Footer";
 
 import ListProducts from "./components/products/ListProducts";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Advertising />
-      <ListProducts />
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route path="/" exact>
+            <ListProducts />
+          </Route>
+        </Switch>
+
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

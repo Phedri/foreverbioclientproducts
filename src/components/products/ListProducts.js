@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import Product from "./Product";
+import Advertising from "../layout/Advertising";
 
 export default class ListProducts extends Component {
   state = {
@@ -22,6 +23,8 @@ export default class ListProducts extends Component {
   render() {
     return (
       <>
+        <Advertising />
+
         <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100"></div>
         <div class="ps-container">
           <div class="ps-section__header mb-50">
