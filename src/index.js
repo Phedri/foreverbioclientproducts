@@ -2,11 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { ProductProvider } from "./components/globalData/Context";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ProductProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ProductProvider>,
   document.getElementById("root")
 );
 
