@@ -5,21 +5,9 @@ import axios from "axios";
 import Product from "./Product";
 import Advertising from "../layout/Advertising";
 
+import { ProductConsumer } from "../globalData/Context";
+
 export default class ListProducts extends Component {
-  state = {
-    products: [],
-  };
-
-  fetchProducts = () => {
-    axios.get("http://localhost:9092/product").then((res) => {
-      const products = res.data;
-      this.setState({ products });
-    });
-  };
-
-  componentDidMount = () => {
-    this.fetchProducts();
-  };
   render() {
     return (
       <>
@@ -80,9 +68,13 @@ export default class ListProducts extends Component {
               <div class="">
                 <div class="grid-sizer"></div>
                 <div className="row">
-                  {this.state.products.map((product) => (
-                    <Product product={product} />
-                  ))}
+                  <ProductConsumer>
+                    {(value) => {
+                      return value.products.map((product) => (
+                        <Product product={product} />
+                      ));
+                    }}
+                  </ProductConsumer>
                 </div>
               </div>
             </div>
