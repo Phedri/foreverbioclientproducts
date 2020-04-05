@@ -7,6 +7,16 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
   state = {
     products: [],
+    productDetailNumber: 0,
+  };
+
+  handleDetail = (num) => {
+    // this.setState({ productDetailNumber: num });
+    console.log("hello from handle detail");
+  };
+
+  addToCart = () => {
+    console.log("hello from add to cart");
   };
 
   fetchProducts = () => {
@@ -21,7 +31,13 @@ class ProductProvider extends Component {
   };
   render() {
     return (
-      <ProductContext.Provider value={{ ...this.state }}>
+      <ProductContext.Provider
+        value={{
+          ...this.state,
+          handleDetail: this.handleDetail,
+          addToCart: this.addToCart,
+        }}
+      >
         {this.props.children}
       </ProductContext.Provider>
     );

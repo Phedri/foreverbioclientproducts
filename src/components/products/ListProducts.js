@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import axios from "axios";
-
 import Product from "./Product";
 import Advertising from "../layout/Advertising";
 
@@ -71,7 +69,7 @@ export default class ListProducts extends Component {
                   <ProductConsumer>
                     {(value) => {
                       return value.products.map((product) => (
-                        <Product product={product} />
+                        <Product key={product.id} product={product} />
                       ));
                     }}
                   </ProductConsumer>
