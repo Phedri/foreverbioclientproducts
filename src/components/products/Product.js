@@ -3,6 +3,7 @@ import React, { Component } from "react";
 export default class Product extends Component {
   state = {
     nomCat: "",
+    transformCart: "",
   };
 
   checkCategory = () => {
@@ -59,6 +60,16 @@ export default class Product extends Component {
                 <a className="ps-shoe__overlay" href="product-detail.html"></a>
               </div>
               <div className="ps-shoe__content">
+                <div className="ps-shoe__variants">
+                  <div className="ps-shoe__variant normal">
+                    <button
+                      class="ps-cart__toggle"
+                      style={{ marginLeft: "230px", maginTop: "10px" }}
+                    >
+                      <i class="ps-icon-shopping-cart"></i>
+                    </button>
+                  </div>
+                </div>
                 {/* <div className="ps-shoe__variants">
                   <div className="ps-shoe__variant normal">
                     <img src="images/bio-product/2.jpg" alt="" />
