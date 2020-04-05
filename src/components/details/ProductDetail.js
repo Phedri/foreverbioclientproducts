@@ -25,22 +25,6 @@ export default class ProductDetail extends Component {
                         data-zoom-image="images/shoe-detail/1.jpg"
                       />
                     </div>
-                    <div class="item">
-                      <img
-                        class="zoom"
-                        src="images/shoe-detail/2.jpg"
-                        alt=""
-                        data-zoom-image="images/shoe-detail/2.jpg"
-                      />
-                    </div>
-                    <div class="item">
-                      <img
-                        class="zoom"
-                        src="images/shoe-detail/3.jpg"
-                        alt=""
-                        data-zoom-image="images/shoe-detail/3.jpg"
-                      />
-                    </div>
                   </div>
                 </div>
                 <div class="ps-product__thumbnail--mobile">

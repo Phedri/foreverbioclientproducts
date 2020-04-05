@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Link } from "react-router-dom";
+
 export default class Product extends Component {
   state = {
     nomCat: "",
@@ -57,7 +59,8 @@ export default class Product extends Component {
                   alt={nom}
                   style={{ height: "250px", width: "250px" }}
                 />
-                <a className="ps-shoe__overlay" href="product-detail.html"></a>
+                <Link to="/detail" className="ps-shoe__overlay"></Link>
+                {/* <a className="ps-shoe__overlay" href="product-detail.html"></a> */}
               </div>
               <div className="ps-shoe__content">
                 <div className="ps-shoe__variants">
