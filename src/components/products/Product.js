@@ -2,10 +2,11 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
+import { ProductConsumer } from "../globalData/Context";
+
 export default class Product extends Component {
   state = {
     nomCat: "",
-    transformCart: "",
   };
 
   checkCategory = () => {
@@ -28,6 +29,7 @@ export default class Product extends Component {
   };
   render() {
     const {
+      id,
       nom,
       description,
       source,
@@ -59,8 +61,18 @@ export default class Product extends Component {
                   alt={nom}
                   style={{ height: "250px", width: "250px" }}
                 />
-                <Link to="/detail" className="ps-shoe__overlay"></Link>
-                {/* <a className="ps-shoe__overlay" href="product-detail.html"></a> */}
+
+                <ProductConsumer>
+                  {(value) => {
+                    return (
+                      <Link
+                        to="/detail"
+                        className="ps-shoe__overlay"
+                        onClick={() => value.handleDetail(id)}
+                      ></Link>
+                    );
+                  }}
+                </ProductConsumer>
               </div>
               <div className="ps-shoe__content">
                 <div className="ps-shoe__variants">

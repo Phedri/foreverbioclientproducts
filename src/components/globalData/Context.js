@@ -7,16 +7,8 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
   state = {
     products: [],
-    productDetailNumber: 0,
-  };
-
-  handleDetail = (num) => {
-    // this.setState({ productDetailNumber: num });
-    console.log("hello from handle detail");
-  };
-
-  addToCart = () => {
-    console.log("hello from add to cart");
+    detailProduct: {},
+    nomCat: "",
   };
 
   fetchProducts = () => {
@@ -29,13 +21,45 @@ class ProductProvider extends Component {
   componentDidMount = () => {
     this.fetchProducts();
   };
+
+  getItem = (id) => {
+    const product = this.state.products.find((item) => item.id === id);
+    return product;
+  };
+
+  handleDetail = (id) => {
+    const product = this.getItem(id);
+    this.setState(() => {
+      return { detailProduct: product };
+    });
+  };
+
+  addToCart = () => {
+    console.log("hello from add to cart");
+  };
+
+  checkCategory = () => {
+    const { idCat } = this.state.detailProduct;
+    if (idCat === 1) {
+      this.setState({ nomCat: "Visage" });
+    } else if (idCat === 2) {
+      this.setState({ nomCat: "Cheveux" });
+    } else if (idCat === 3) {
+      this.setState({ nomCat: "Huile" });
+    } else if (idCat === 4) {
+      this.setState({ nomCat: "Peau" });
+    } else if (idCat === 5) {
+      this.setState({ nomCat: "Aliment" });
+    }
+  };
+
   render() {
     return (
       <ProductContext.Provider
         value={{
           ...this.state,
-          handleDetail: this.handleDetail,
           addToCart: this.addToCart,
+          handleDetail: this.handleDetail,
         }}
       >
         {this.props.children}
