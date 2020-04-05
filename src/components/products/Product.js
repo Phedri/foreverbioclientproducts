@@ -77,12 +77,17 @@ export default class Product extends Component {
               <div className="ps-shoe__content">
                 <div className="ps-shoe__variants">
                   <div className="ps-shoe__variant normal">
-                    <button
-                      class="ps-cart__toggle"
-                      style={{ marginLeft: "230px", maginTop: "10px" }}
-                    >
-                      <i class="ps-icon-shopping-cart"></i>
-                    </button>
+                    <ProductConsumer>
+                      {(value) => (
+                        <button
+                          class="ps-cart__toggle"
+                          style={{ marginLeft: "230px", maginTop: "10px" }}
+                          onClick={() => value.addToCart(id)}
+                        >
+                          <i class="ps-icon-shopping-cart"></i>
+                        </button>
+                      )}
+                    </ProductConsumer>
                   </div>
                 </div>
                 {/* <div className="ps-shoe__variants">

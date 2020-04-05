@@ -119,9 +119,19 @@ export default class ProductDetail extends Component {
                           </div>
                         </div>
                         <div class="ps-product__shopping">
-                          <a class="ps-btn mb-10" href="cart.html">
-                            Ajouter au panier<i class="ps-icon-next"></i>
-                          </a>
+                          <ProductConsumer>
+                            {(value) => (
+                              <button
+                                class="ps-btn mb-10"
+                                onClick={() =>
+                                  value.addToCart(value.detailProduct.id)
+                                }
+                              >
+                                Ajouter au panier<i class="ps-icon-next"></i>
+                              </button>
+                            )}
+                          </ProductConsumer>
+
                           <div class="ps-product__actions">
                             <a class="mr-10" href="whishlist.html">
                               <i class="ps-icon-heart"></i>

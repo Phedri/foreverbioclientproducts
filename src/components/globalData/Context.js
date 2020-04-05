@@ -9,6 +9,7 @@ class ProductProvider extends Component {
     products: [],
     detailProduct: {},
     nomCat: "",
+    cart: [],
   };
 
   fetchProducts = () => {
@@ -34,8 +35,25 @@ class ProductProvider extends Component {
     });
   };
 
-  addToCart = () => {
+  addToCart = (id) => {
     console.log("hello from add to cart");
+    let tempProducts = [...this.state.products];
+    const index = tempProducts.indexOf(this.getItem(id));
+    const product = tempProducts[index];
+    // product.inCart = true;
+    // product.count = 1;
+    // const prix = product.prix;
+    // product.total = price;
+
+    this.setState(
+      () => {
+        return { products: tempProducts, cart: [...this.state.cart, product] };
+      },
+      () => {
+        //every time we add an element in the cart, we'll callback the function to calculate the totals
+        // this.addTotals();
+      }
+    );
   };
 
   checkCategory = () => {
