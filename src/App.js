@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 
 import ListProducts from "./components/products/ListProducts";
 import Cart from "./components/cart/Cart";
+import ProductDetail from "./components/details/ProductDetail";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/cart">
             <Cart />
+          </Route>
+          <Route path="/detail">
+            <ProductDetail />
           </Route>
         </Switch>
 
