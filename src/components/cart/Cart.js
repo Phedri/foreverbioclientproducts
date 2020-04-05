@@ -58,9 +58,16 @@ export default class Cart extends Component {
                               </div>
                             </td>
                             <td>{product.prix}</td>
-                            <td>
-                              <div class="ps-remove"></div>
-                            </td>
+                            <ProductConsumer>
+                              {(value) => (
+                                <td>
+                                  <div
+                                    class="ps-remove"
+                                    onClick={() => value.removeItem(product.id)}
+                                  ></div>
+                                </td>
+                              )}
+                            </ProductConsumer>
                           </tr>
                         ))}
                       </tbody>

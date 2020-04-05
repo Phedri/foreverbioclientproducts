@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
+import { ProductConsumer } from "../globalData/Context";
+
 export default class Header extends Component {
   render() {
     return (
@@ -174,9 +176,14 @@ export default class Header extends Component {
                 <div class="ps-cart">
                   <Link to="/cart">
                     <a class="ps-cart__toggle" href="#">
-                      <span>
-                        <i>20</i>
-                      </span>
+                      <ProductConsumer>
+                        {(value) => (
+                          <span>
+                            <i>{value.cart.length}</i>
+                          </span>
+                        )}
+                      </ProductConsumer>
+
                       <i class="ps-icon-shopping-cart"></i>
                     </a>
                   </Link>
