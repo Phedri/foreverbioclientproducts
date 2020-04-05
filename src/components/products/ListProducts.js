@@ -1,42 +1,51 @@
 import React, { Component } from "react";
 
-export default class BestSellers extends Component {
+export default class ListProducts extends Component {
   render() {
     return (
       <>
+        <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100"></div>
         <div class="ps-container">
           <div class="ps-section__header mb-50">
-            <h3 class="ps-section__title" data-mask="features">
-              - Découvrez nos meilleurs produits
+            <h3 class="ps-section__title" data-mask="produits">
+              - Découvrez nos produits
             </h3>
 
-            <ul class="ps-masonry__filter">
+            {/* <ul
+              class="ps-masonry__filter"
+              styles={{ display: "flex", color: "red" }}
+            >
               <li class="current">
                 <a href="#" data-filter="*">
                   Tout <sup>8</sup>
                 </a>
               </li>
               <li>
-                <a href="#" data-filter=".nike">
-                  Nourriture<sup>1</sup>
+                <a href="#" data-filter=".visage">
+                  Visage <sup>1</sup>
                 </a>
               </li>
               <li>
-                <a href="#" data-filter=".adidas">
-                  Boisson <sup>1</sup>
+                <a href="#" data-filter=".cheveux">
+                  Cheveux <sup>1</sup>
                 </a>
               </li>
               <li>
-                <a href="#" data-filter=".men">
-                  Textile <sup>1</sup>
+                <a href="#" data-filter=".huile">
+                  Huile <sup>1</sup>
                 </a>
               </li>
               <li>
-                <a href="#" data-filter=".women">
-                  Agriculture <sup>1</sup>
+                <a href="#" data-filter=".peau">
+                  Peau <sup>1</sup>
                 </a>
               </li>
-            </ul>
+              <li>
+                <a href="#" data-filter=".aliment">
+                  Aliment <sup>1</sup>
+                </a>
+              </li>
+            </ul> */}
           </div>
           <div class="ps-section__content pb-50">
             <div
