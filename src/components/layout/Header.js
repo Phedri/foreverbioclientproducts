@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Link } from "react-router-dom";
+
 export default class Header extends Component {
   render() {
     return (
@@ -85,14 +87,16 @@ export default class Header extends Component {
               <div class="navigation__column left">
                 <div class="header__logo">
                   <a class="ps-logo" href="index.html">
-                    <img src="images/logo.png" alt="" />
+                    <Link to="/">
+                      <img src="images/logo.png" alt="" />
+                    </Link>
                   </a>
                 </div>
               </div>
               <div class="navigation__column center">
                 <ul class="main-menu menu">
                   <li class="menu-item menu-item-has-children dropdown">
-                    <a href="index.html">Accueil</a>
+                    <Link to="/">Accueil</Link>
                     {/* <ul class="sub-menu">
                       <li class="menu-item">
                         <a href="index.html">Accueil #1</a>
@@ -168,13 +172,16 @@ export default class Header extends Component {
                   </button>
                 </form>
                 <div class="ps-cart">
-                  <a class="ps-cart__toggle" href="#">
-                    <span>
-                      <i>20</i>
-                    </span>
-                    <i class="ps-icon-shopping-cart"></i>
-                  </a>
-                  <div class="ps-cart__listing">
+                  <Link to="/cart">
+                    <a class="ps-cart__toggle" href="#">
+                      <span>
+                        <i>20</i>
+                      </span>
+                      <i class="ps-icon-shopping-cart"></i>
+                    </a>
+                  </Link>
+
+                  {/* <div class="ps-cart__listing">
                     <div class="ps-cart__content">
                       <div class="ps-cart-item">
                         <a class="ps-cart-item__close" href="#"></a>
@@ -259,7 +266,7 @@ export default class Header extends Component {
                         Acheter<i class="ps-icon-arrow-left"></i>
                       </a>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div class="menu-toggle">
                   <span></span>
