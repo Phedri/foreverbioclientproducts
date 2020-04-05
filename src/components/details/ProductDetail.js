@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import { ProductConsumer } from "../globalData/Context";
 
 export default class ProductDetail extends Component {
+  state = {
+    notif: false,
+  };
   render() {
     return (
       <>
@@ -123,9 +126,10 @@ export default class ProductDetail extends Component {
                             {(value) => (
                               <button
                                 class="ps-btn mb-10"
-                                onClick={() =>
-                                  value.addToCart(value.detailProduct.id)
-                                }
+                                onClick={() => {
+                                  value.addToCart(value.detailProduct.id);
+                                  this.setState({ notif: true });
+                                }}
                               >
                                 Ajouter au panier<i class="ps-icon-next"></i>
                               </button>
@@ -140,6 +144,9 @@ export default class ProductDetail extends Component {
                               <i class="ps-icon-share"></i>
                             </a>
                           </div>
+                          {this.state.notif && (
+                            <p style={{ color: "green" }}>Produit ajouté!</p>
+                          )}
                         </div>
                       </div>
                       <div class="clearfix"></div>
