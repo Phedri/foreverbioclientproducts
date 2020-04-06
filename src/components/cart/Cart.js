@@ -41,7 +41,7 @@ export default class Cart extends Component {
                                 {product.nom}
                               </a>
                             </td>
-                            <td>{product.prix}</td>
+                            <td>{product.prix}DH</td>
                             <td>
                               <div class="form-group--number">
                                 <button
@@ -63,7 +63,7 @@ export default class Cart extends Component {
                                 </button>
                               </div>
                             </td>
-                            <td>{product.total}</td>
+                            <td>{product.total}DH</td>
                             <ProductConsumer>
                               {(value) => (
                                 <td>
@@ -100,7 +100,7 @@ export default class Cart extends Component {
                       </div>
                       <div class="ps-cart__total">
                         <h3>
-                          Prix Total: <span> 2599.00 $</span>
+                          Prix Total: <span>{value.cartSubTotal}DH</span>
                         </h3>
                         <a class="ps-btn" href="checkout.html">
                           Cammander<i class="ps-icon-next"></i>

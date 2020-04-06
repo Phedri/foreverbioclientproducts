@@ -10,12 +10,19 @@ class ProductProvider extends Component {
     detailProduct: {},
     nomCat: "",
     cart: [],
+    cartSubTotal: 0,
   };
 
   addAttributes = () => {
     this.state.products.forEach((product) => {
       product.count = 1;
-      product.total = product.prix;
+      product.total = product.prix * product.count;
+      if (
+        product.etat === "Rupture de stock" ||
+        product.etat === "Approvisionnement"
+      ) {
+        product.count = 0;
+      }
     });
     console.log(this.state.products);
   };
@@ -60,7 +67,7 @@ class ProductProvider extends Component {
       },
       () => {
         //every time we add an element in the cart, we'll callback the function to calculate the totals
-        // this.addTotals();
+        this.addTotals();
       }
     );
   };
@@ -111,8 +118,6 @@ class ProductProvider extends Component {
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
 
-    console.log(product);
-
     if (product.count < product.qte) {
       product.count += 1;
       product.total = product.count * product.prix;
@@ -123,7 +128,7 @@ class ProductProvider extends Component {
         return { products: tempProducts };
       },
       () => {
-        // this.addTotals();
+        this.addTotals();
       }
     );
   };
@@ -132,8 +137,6 @@ class ProductProvider extends Component {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
-
-    console.log(product);
 
     if (product.count > 1) {
       product.count -= 1;
@@ -145,9 +148,20 @@ class ProductProvider extends Component {
         return { products: tempProducts };
       },
       () => {
-        // this.addTotals();
+        this.addTotals();
       }
     );
+  };
+
+  addTotals = () => {
+    let subTotal = 0;
+    this.state.cart.map((item) => (subTotal += item.total));
+
+    this.setState(() => {
+      return {
+        cartSubTotal: subTotal,
+      };
+    });
   };
 
   render() {

@@ -85,6 +85,12 @@ export default class ProductDetail extends Component {
                           <h4>SOURCE</h4>
                           <p>{value.detailProduct.source}</p>
                         </div>
+                        <div class="ps-product__block ps-product__quickview">
+                          <h4>ÉTAT</h4>
+                          <p style={{ fontSize: "16px", fontWeight: "bold" }}>
+                            {value.detailProduct.etat}
+                          </p>
+                        </div>
                         <div class="ps-product__block ps-product__size">
                           <h4>
                             CHOISIR LA QUANTITÉ
