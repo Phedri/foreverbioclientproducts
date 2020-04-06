@@ -12,10 +12,19 @@ class ProductProvider extends Component {
     cart: [],
   };
 
+  addAttributes = () => {
+    this.state.products.forEach((product) => {
+      product.count = 1;
+      product.total = product.prix;
+    });
+    console.log(this.state.products);
+  };
+
   fetchProducts = () => {
     axios.get("http://localhost:9092/product").then((res) => {
       const products = res.data;
       this.setState({ products });
+      this.addAttributes();
     });
   };
 
@@ -97,6 +106,50 @@ class ProductProvider extends Component {
     }
   };
 
+  increment = (id) => {
+    let tempProducts = [...this.state.products];
+    const index = tempProducts.indexOf(this.getItem(id));
+    const product = tempProducts[index];
+
+    console.log(product);
+
+    if (product.count < product.qte) {
+      product.count += 1;
+      product.total = product.count * product.prix;
+    }
+
+    this.setState(
+      () => {
+        return { products: tempProducts };
+      },
+      () => {
+        // this.addTotals();
+      }
+    );
+  };
+
+  decrement = (id) => {
+    let tempProducts = [...this.state.products];
+    const index = tempProducts.indexOf(this.getItem(id));
+    const product = tempProducts[index];
+
+    console.log(product);
+
+    if (product.count > 1) {
+      product.count -= 1;
+      product.total = product.count * product.prix;
+    }
+
+    this.setState(
+      () => {
+        return { products: tempProducts };
+      },
+      () => {
+        // this.addTotals();
+      }
+    );
+  };
+
   render() {
     return (
       <ProductContext.Provider
@@ -105,6 +158,8 @@ class ProductProvider extends Component {
           addToCart: this.addToCart,
           handleDetail: this.handleDetail,
           removeItem: this.removeItem,
+          increment: this.increment,
+          decrement: this.decrement,
         }}
       >
         {this.props.children}

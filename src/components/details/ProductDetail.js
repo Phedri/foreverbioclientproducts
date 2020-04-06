@@ -91,34 +91,51 @@ export default class ProductDetail extends Component {
                             <p>Quantité en STOCK: {value.detailProduct.qte}</p>
                           </h4>
                           <div class="container">
-                            <button
-                              class="ps-btn ps-btn--gray"
-                              data-decrease
-                              style={{
-                                padding: "10px 15px",
-                                marginRight: "3px",
+                            <ProductConsumer>
+                              {(value) => {
+                                return (
+                                  <>
+                                    <button
+                                      class="ps-btn ps-btn--gray"
+                                      data-decrease
+                                      style={{
+                                        padding: "10px 15px",
+                                        marginRight: "3px",
+                                      }}
+                                      onClick={() =>
+                                        value.decrement(value.detailProduct.id)
+                                      }
+                                    >
+                                      -
+                                    </button>
+                                    <input
+                                      class="form-control"
+                                      style={{
+                                        width: "100px",
+                                        display: "inline-block",
+                                      }}
+                                      data-value
+                                      type="text"
+                                      value={value.detailProduct.count}
+                                      disabled
+                                    />
+                                    <button
+                                      class="ps-btn ps-btn--gray"
+                                      style={{
+                                        padding: "10px 15px",
+                                        marginLeft: "3px",
+                                      }}
+                                      data-increase
+                                      onClick={() =>
+                                        value.increment(value.detailProduct.id)
+                                      }
+                                    >
+                                      +
+                                    </button>
+                                  </>
+                                );
                               }}
-                            >
-                              -
-                            </button>
-                            <input
-                              class="form-control"
-                              style={{ width: "50px", display: "inline-block" }}
-                              data-value
-                              type="text"
-                              value="1"
-                              disabled
-                            />
-                            <button
-                              class="ps-btn ps-btn--gray"
-                              style={{
-                                padding: "10px 15px",
-                                marginLeft: "3px",
-                              }}
-                              data-increase
-                            >
-                              +
-                            </button>
+                            </ProductConsumer>
                           </div>
                         </div>
                         <div class="ps-product__shopping">

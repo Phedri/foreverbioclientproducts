@@ -44,20 +44,26 @@ export default class Cart extends Component {
                             <td>{product.prix}</td>
                             <td>
                               <div class="form-group--number">
-                                <button class="minus">
+                                <button
+                                  class="minus"
+                                  onClick={() => value.decrement(product.id)}
+                                >
                                   <span>-</span>
                                 </button>
                                 <input
                                   class="form-control"
                                   type="text"
-                                  value="1"
+                                  value={product.count}
                                 />
-                                <button class="plus">
+                                <button
+                                  class="plus"
+                                  onClick={() => value.increment(product.id)}
+                                >
                                   <span>+</span>
                                 </button>
                               </div>
                             </td>
-                            <td>{product.prix}</td>
+                            <td>{product.total}</td>
                             <ProductConsumer>
                               {(value) => (
                                 <td>
