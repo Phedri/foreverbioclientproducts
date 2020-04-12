@@ -5,10 +5,20 @@ import { Link } from "react-router-dom";
 import { ProductConsumer } from "../globalData/Context";
 
 export default class Header extends Component {
+  state = {
+    search: "",
+  };
+
+  handleOnChange = (e) => {
+    e.preventDefault();
+
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     return (
       <>
-        <div class="header--sidebar"></div>
+        <div class="header--sidebar" />
         <header class="header">
           <div class="header__top">
             <div class="container-fluid">
@@ -29,7 +39,8 @@ export default class Header extends Component {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        MAD<i class="fa fa-angle-down"></i>
+                        MAD
+                        <i class="fa fa-angle-down" />
                       </a>
                       <ul class="dropdown-menu">
                         <li>
@@ -62,7 +73,8 @@ export default class Header extends Component {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        Langue<i class="fa fa-angle-down"></i>
+                        Langue
+                        <i class="fa fa-angle-down" />
                       </a>
                       <ul class="dropdown-menu">
                         <li>
@@ -159,19 +171,26 @@ export default class Header extends Component {
                 </ul>
               </div>
               <div class="navigation__column right">
-                <form
-                  class="ps-search--header"
-                  action="do_action"
-                  method="post"
-                >
+                <form class="ps-search--header">
                   <input
                     class="form-control"
                     type="text"
+                    name="search"
                     placeholder="Chercher Produit..."
+                    value={this.state.search}
+                    onChange={this.handleOnChange}
                   />
-                  <button>
-                    <i class="ps-icon-search"></i>
-                  </button>
+                  <ProductConsumer>
+                    {(value) => (
+                      <button
+                        onClick={(e) =>
+                          value.searchProduct(e, this.state.search)
+                        }
+                      >
+                        <i class="ps-icon-search" />
+                      </button>
+                    )}
+                  </ProductConsumer>
                 </form>
                 <div class="ps-cart">
                   <Link to="/cart">
@@ -186,7 +205,7 @@ export default class Header extends Component {
                         )}
                       </ProductConsumer>
 
-                      <i class="ps-icon-shopping-cart"></i>
+                      <i class="ps-icon-shopping-cart" />
                     </a>
                   </Link>
 
@@ -278,7 +297,7 @@ export default class Header extends Component {
                   </div> */}
                 </div>
                 <div class="menu-toggle">
-                  <span></span>
+                  <span />
                 </div>
               </div>
             </div>

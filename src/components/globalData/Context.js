@@ -35,6 +35,22 @@ class ProductProvider extends Component {
     });
   };
 
+  searchProduct = (e, search) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:9092/product/search", {
+        text: search,
+      })
+      .then((res) => {
+        const products = res.data;
+        this.setState({ products });
+      });
+  };
+
+  filterProductsByIdCat = (idCat) => {
+    this.state.products.filter((product) => product.idCat === idCat);
+  };
+
   componentDidMount = () => {
     this.fetchProducts();
   };
@@ -174,6 +190,7 @@ class ProductProvider extends Component {
           removeItem: this.removeItem,
           increment: this.increment,
           decrement: this.decrement,
+          searchProduct: this.searchProduct,
         }}
       >
         {this.props.children}
