@@ -4,6 +4,7 @@ import Product from "./Product";
 import Advertising from "../layout/Advertising";
 
 import { ProductConsumer } from "../globalData/Context";
+import ListCategories from "../categories/ListCategories";
 
 export default class ListProducts extends Component {
   render() {
@@ -11,7 +12,7 @@ export default class ListProducts extends Component {
       <>
         <Advertising />
 
-        <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100"></div>
+        <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100" />
         <div class="ps-container">
           <div class="ps-section__header mb-50">
             <h3 class="ps-section__title" data-mask="produits bio">
@@ -64,15 +65,18 @@ export default class ListProducts extends Component {
               data-radio="100%"
             >
               <div class="">
-                <div class="grid-sizer"></div>
+                <div class="grid-sizer" />
                 <div className="row">
-                  <ProductConsumer>
-                    {(value) => {
-                      return value.products.map((product) => (
-                        <Product key={product.id} product={product} />
-                      ));
-                    }}
-                  </ProductConsumer>
+                  <ListCategories />
+                  <div className="col-sm-12 col-md-10 col-lg-10">
+                    <ProductConsumer>
+                      {(value) => {
+                        return value.products.map((product) => (
+                          <Product key={product.id} product={product} />
+                        ));
+                      }}
+                    </ProductConsumer>
+                  </div>
                 </div>
               </div>
             </div>

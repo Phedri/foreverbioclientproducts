@@ -118,7 +118,8 @@ export default class Product extends Component {
                     <a href="#">{this.state.nomCat}</a>
                   </p>
                   <span className="ps-shoe__price">
-                    <del>{prix + 12}DH</del> {prix}DH
+                    {/* <del>{prix + 12}DH</del> */}
+                    {prix}DH
                   </span>
                 </div>
               </div>
