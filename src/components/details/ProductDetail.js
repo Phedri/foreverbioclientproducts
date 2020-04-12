@@ -93,7 +93,9 @@ export default class ProductDetail extends Component {
                           </select>
                           <a href="#comm">(Voir les commentaires)</a>
                         </div>
-                        <h1>{value.detailProduct.nom}</h1>
+                        <h1>
+                          {value.detailProduct.nom} ({value.detailProduct.unit})
+                        </h1>
                         <h4>{this.state.nomCat}</h4>
                         <p class="ps-product__category">{value.nomCat}</p>
                         <h3 class="ps-product__price">
