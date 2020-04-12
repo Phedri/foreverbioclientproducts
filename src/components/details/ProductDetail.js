@@ -1,11 +1,33 @@
 import React, { Component } from "react";
 
-import { ProductConsumer } from "../globalData/Context";
+import { ProductConsumer, ProductContext } from "../globalData/Context";
 
 export default class ProductDetail extends Component {
   state = {
     notif: false,
+    nomCat: "",
   };
+
+  checkCategory = () => {
+    const { idCat } = this.context.detailProduct;
+    if (idCat === 1) {
+      this.setState({ nomCat: "Visage" });
+    } else if (idCat === 2) {
+      this.setState({ nomCat: "Cheveux" });
+    } else if (idCat === 3) {
+      this.setState({ nomCat: "Huile" });
+    } else if (idCat === 4) {
+      this.setState({ nomCat: "Peau" });
+    } else if (idCat === 5) {
+      this.setState({ nomCat: "Aliment" });
+    }
+  };
+
+  componentDidMount = () => {
+    this.checkCategory();
+    console.log(this.context);
+  };
+
   render() {
     return (
       <>
@@ -72,6 +94,7 @@ export default class ProductDetail extends Component {
                           <a href="#comm">(Voir les commentaires)</a>
                         </div>
                         <h1>{value.detailProduct.nom}</h1>
+                        <h4>{this.state.nomCat}</h4>
                         <p class="ps-product__category">{value.nomCat}</p>
                         <h3 class="ps-product__price">
                           {value.detailProduct.prix}DH{" "}
@@ -154,17 +177,18 @@ export default class ProductDetail extends Component {
                                   this.setState({ notif: true });
                                 }}
                               >
-                                Ajouter au panier<i class="ps-icon-next"></i>
+                                Ajouter au panier
+                                <i class="ps-icon-next" />
                               </button>
                             )}
                           </ProductConsumer>
 
                           <div class="ps-product__actions">
                             <a class="mr-10" href="whishlist.html">
-                              <i class="ps-icon-heart"></i>
+                              <i class="ps-icon-heart" />
                             </a>
                             <a href="compare.html">
-                              <i class="ps-icon-share"></i>
+                              <i class="ps-icon-share" />
                             </a>
                           </div>
                           {this.state.notif && (
@@ -172,7 +196,7 @@ export default class ProductDetail extends Component {
                           )}
                         </div>
                       </div>
-                      <div class="clearfix"></div>
+                      <div class="clearfix" />
                       <div class="ps-product__content mt-50">
                         <ul class="tab-list" role="tablist">
                           <li class="active">
@@ -270,7 +294,8 @@ export default class ProductDetail extends Component {
                                 </div>
                                 <div class="form-group">
                                   <label>
-                                    Votre évaluation<span></span>
+                                    Votre évaluation
+                                    <span />
                                   </label>
                                   <select class="ps-rating">
                                     <option value="1">1</option>
@@ -284,14 +309,12 @@ export default class ProductDetail extends Component {
                               <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                   <label>Votre Commentaire:</label>
-                                  <textarea
-                                    class="form-control"
-                                    rows="6"
-                                  ></textarea>
+                                  <textarea class="form-control" rows="6" />
                                 </div>
                                 <div class="form-group">
                                   <button class="ps-btn ps-btn--sm">
-                                    Soumettre<i class="ps-icon-next"></i>
+                                    Soumettre
+                                    <i class="ps-icon-next" />
                                   </button>
                                 </div>
                               </div>
@@ -325,7 +348,7 @@ export default class ProductDetail extends Component {
                               class="form-control"
                               rows="6"
                               placeholder="Enter your addition here..."
-                            ></textarea>
+                            />
                           </div>
                           <div class="form-group">
                             <button class="ps-btn" type="button">
@@ -345,3 +368,5 @@ export default class ProductDetail extends Component {
     );
   }
 }
+
+ProductDetail.contextType = ProductContext;
