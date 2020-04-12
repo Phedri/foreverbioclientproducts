@@ -32,6 +32,7 @@ export default class Product extends Component {
       id,
       nom,
       description,
+      unit,
       source,
       etat,
       prix,
@@ -54,7 +55,7 @@ export default class Product extends Component {
                   <span>bio</span>
                 </div> */}
                 <a className="ps-shoe__favorite" href="#">
-                  <i className="ps-icon-heart"></i>
+                  <i className="ps-icon-heart" />
                 </a>
                 <img
                   src={url}
@@ -69,7 +70,7 @@ export default class Product extends Component {
                         to="/detail"
                         className="ps-shoe__overlay"
                         onClick={() => value.handleDetail(id)}
-                      ></Link>
+                      />
                     );
                   }}
                 </ProductConsumer>
@@ -84,7 +85,7 @@ export default class Product extends Component {
                           style={{ marginLeft: "230px", maginTop: "10px" }}
                           onClick={() => value.addToCart(id)}
                         >
-                          <i class="ps-icon-shopping-cart"></i>
+                          <i class="ps-icon-shopping-cart" />
                         </button>
                       )}
                     </ProductConsumer>
@@ -111,7 +112,7 @@ export default class Product extends Component {
                     href="#"
                     style={{ fontSize: "20px" }}
                   >
-                    {nom}
+                    {nom} ({unit})
                   </a>
                   <p className="ps-shoe__categories">
                     <a href="#">{this.state.nomCat}</a>
