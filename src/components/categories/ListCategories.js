@@ -52,7 +52,45 @@ export default class ListCategories extends Component {
           )}
         </ProductConsumer>
 
-        <h3>Les catégories</h3>
+        <h3 style={{ marginBottom: "50px" }}>Les catégories</h3>
+        <ProductConsumer>
+          {value => {
+            return (
+              <>
+                <h4
+                  style={{ cursor: "pointer", marginBottom: "20px" }}
+                  onClick={() => value.filterProductsByIdCat(1)}
+                >
+                  Visage
+                </h4>
+                <h4
+                  style={{ cursor: "pointer", marginBottom: "20px" }}
+                  onClick={() => value.filterProductsByIdCat(2)}
+                >
+                  Cheveux
+                </h4>
+                <h4
+                  style={{ cursor: "pointer", marginBottom: "20px" }}
+                  onClick={() => value.filterProductsByIdCat(3)}
+                >
+                  Huile
+                </h4>
+                <h4
+                  style={{ cursor: "pointer", marginBottom: "20px" }}
+                  onClick={() => value.filterProductsByIdCat(4)}
+                >
+                  Peau
+                </h4>
+                <h4
+                  style={{ cursor: "pointer", marginBottom: "20px" }}
+                  onClick={() => value.filterProductsByIdCat(5)}
+                >
+                  Aliment
+                </h4>
+              </>
+            );
+          }}
+        </ProductConsumer>
       </div>
     );
   }

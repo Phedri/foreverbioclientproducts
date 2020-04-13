@@ -7,6 +7,7 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
   state = {
     products: [],
+    copyProducts: [],
     detailProduct: {},
     nomCat: "",
     cart: [],
@@ -30,7 +31,7 @@ class ProductProvider extends Component {
   fetchProducts = () => {
     axios.get("http://localhost:9092/product").then(res => {
       const products = res.data;
-      this.setState({ products });
+      this.setState({ products: products, copyProducts: products });
       this.addAttributes();
     });
   };
@@ -48,7 +49,10 @@ class ProductProvider extends Component {
   };
 
   filterProductsByIdCat = idCat => {
-    this.state.products.filter(product => product.idCat === idCat);
+    const productsFiltered = this.state.copyProducts.filter(
+      product => product.idCat === idCat
+    );
+    this.setState({ products: productsFiltered });
   };
 
   componentDidMount = () => {
@@ -191,7 +195,8 @@ class ProductProvider extends Component {
           increment: this.increment,
           decrement: this.decrement,
           searchProduct: this.searchProduct,
-          fetchProducts: this.fetchProducts
+          fetchProducts: this.fetchProducts,
+          filterProductsByIdCat: this.filterProductsByIdCat
         }}
       >
         {this.props.children}
