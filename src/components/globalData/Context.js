@@ -10,11 +10,11 @@ class ProductProvider extends Component {
     detailProduct: {},
     nomCat: "",
     cart: [],
-    cartSubTotal: 0,
+    cartSubTotal: 0
   };
 
   addAttributes = () => {
-    this.state.products.forEach((product) => {
+    this.state.products.forEach(product => {
       product.count = 1;
       product.total = product.prix * product.count;
       if (
@@ -28,7 +28,7 @@ class ProductProvider extends Component {
   };
 
   fetchProducts = () => {
-    axios.get("http://localhost:9092/product").then((res) => {
+    axios.get("http://localhost:9092/product").then(res => {
       const products = res.data;
       this.setState({ products });
       this.addAttributes();
@@ -39,35 +39,35 @@ class ProductProvider extends Component {
     e.preventDefault();
     axios
       .post("http://localhost:9092/product/search", {
-        text: search,
+        text: search
       })
-      .then((res) => {
+      .then(res => {
         const products = res.data;
         this.setState({ products });
       });
   };
 
-  filterProductsByIdCat = (idCat) => {
-    this.state.products.filter((product) => product.idCat === idCat);
+  filterProductsByIdCat = idCat => {
+    this.state.products.filter(product => product.idCat === idCat);
   };
 
   componentDidMount = () => {
     this.fetchProducts();
   };
 
-  getItem = (id) => {
-    const product = this.state.products.find((item) => item.id === id);
+  getItem = id => {
+    const product = this.state.products.find(item => item.id === id);
     return product;
   };
 
-  handleDetail = (id) => {
+  handleDetail = id => {
     const product = this.getItem(id);
     this.setState(() => {
       return { detailProduct: product };
     });
   };
 
-  addToCart = (id) => {
+  addToCart = id => {
     console.log("hello from add to cart");
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
@@ -88,11 +88,11 @@ class ProductProvider extends Component {
     );
   };
 
-  removeItem = (id) => {
+  removeItem = id => {
     let tempProducts = [...this.state.products];
     let tempCart = [...this.state.cart];
 
-    tempCart = tempCart.filter((item) => item.id !== id);
+    tempCart = tempCart.filter(item => item.id !== id);
 
     const index = tempProducts.indexOf(this.getItem(id));
     let removedProduct = tempProducts[index];
@@ -105,7 +105,7 @@ class ProductProvider extends Component {
       () => {
         return {
           cart: [...tempCart],
-          products: [...tempProducts],
+          products: [...tempProducts]
         };
       },
       () => {
@@ -129,7 +129,7 @@ class ProductProvider extends Component {
     }
   };
 
-  increment = (id) => {
+  increment = id => {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
@@ -149,7 +149,7 @@ class ProductProvider extends Component {
     );
   };
 
-  decrement = (id) => {
+  decrement = id => {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
@@ -171,11 +171,11 @@ class ProductProvider extends Component {
 
   addTotals = () => {
     let subTotal = 0;
-    this.state.cart.map((item) => (subTotal += item.total));
+    this.state.cart.map(item => (subTotal += item.total));
 
     this.setState(() => {
       return {
-        cartSubTotal: subTotal,
+        cartSubTotal: subTotal
       };
     });
   };
@@ -191,6 +191,7 @@ class ProductProvider extends Component {
           increment: this.increment,
           decrement: this.decrement,
           searchProduct: this.searchProduct,
+          fetchProducts: this.fetchProducts
         }}
       >
         {this.props.children}

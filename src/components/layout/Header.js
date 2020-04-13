@@ -6,10 +6,10 @@ import { ProductConsumer } from "../globalData/Context";
 
 export default class Header extends Component {
   state = {
-    search: "",
+    search: ""
   };
 
-  handleOnChange = (e) => {
+  handleOnChange = e => {
     e.preventDefault();
 
     this.setState({ [e.target.name]: e.target.value });
@@ -173,6 +173,7 @@ export default class Header extends Component {
               <div class="navigation__column right">
                 <form class="ps-search--header">
                   <input
+                    autocomplete="off"
                     class="form-control"
                     type="text"
                     name="search"
@@ -181,11 +182,9 @@ export default class Header extends Component {
                     onChange={this.handleOnChange}
                   />
                   <ProductConsumer>
-                    {(value) => (
+                    {value => (
                       <button
-                        onClick={(e) =>
-                          value.searchProduct(e, this.state.search)
-                        }
+                        onClick={e => value.searchProduct(e, this.state.search)}
                       >
                         <i class="ps-icon-search" />
                       </button>
@@ -196,7 +195,7 @@ export default class Header extends Component {
                   <Link to="/cart">
                     <a class="ps-cart__toggle" href="#">
                       <ProductConsumer>
-                        {(value) => (
+                        {value => (
                           <span style={{ width: "26px", height: "26px" }}>
                             <i style={{ fontSize: "18px" }}>
                               {value.cart.length}

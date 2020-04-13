@@ -7,6 +7,9 @@ import { ProductConsumer } from "../globalData/Context";
 import ListCategories from "../categories/ListCategories";
 
 export default class ListProducts extends Component {
+  state = {
+    search: ""
+  };
   render() {
     return (
       <>
@@ -64,19 +67,17 @@ export default class ListProducts extends Component {
               data-gap="30"
               data-radio="100%"
             >
-              <div class="">
-                <div class="grid-sizer" />
-                <div className="row">
-                  <ListCategories />
-                  <div className="col-sm-12 col-md-10 col-lg-10">
-                    <ProductConsumer>
-                      {(value) => {
-                        return value.products.map((product) => (
-                          <Product key={product.id} product={product} />
-                        ));
-                      }}
-                    </ProductConsumer>
-                  </div>
+              <div class="grid-sizer" />
+              <div className="row">
+                <ListCategories />
+                <div className="col-sm-12 col-md-10 col-lg-10">
+                  <ProductConsumer>
+                    {value => {
+                      return value.products.map(product => (
+                        <Product key={product.id} product={product} />
+                      ));
+                    }}
+                  </ProductConsumer>
                 </div>
               </div>
             </div>
