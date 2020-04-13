@@ -6,7 +6,7 @@ import { ProductConsumer } from "../globalData/Context";
 
 export default class Product extends Component {
   state = {
-    nomCat: "",
+    nomCat: ""
   };
 
   checkCategory = () => {
@@ -37,7 +37,7 @@ export default class Product extends Component {
       etat,
       prix,
       qte,
-      url,
+      url
     } = this.props.product;
     return (
       <>
@@ -64,7 +64,7 @@ export default class Product extends Component {
                 />
 
                 <ProductConsumer>
-                  {(value) => {
+                  {value => {
                     return (
                       <Link
                         to="/detail"
@@ -79,7 +79,7 @@ export default class Product extends Component {
                 <div className="ps-shoe__variants">
                   <div className="ps-shoe__variant normal">
                     <ProductConsumer>
-                      {(value) => (
+                      {value => (
                         <button
                           class="ps-cart__toggle"
                           style={{ marginLeft: "230px", maginTop: "10px" }}
@@ -112,8 +112,10 @@ export default class Product extends Component {
                     href="#"
                     style={{ fontSize: "20px" }}
                   >
-                    {nom} ({unit})
+                    {nom}
                   </a>
+                  <p className="ps-shoe__categorie">({unit})</p>
+
                   <p className="ps-shoe__categories">
                     <a href="#">{this.state.nomCat}</a>
                   </p>

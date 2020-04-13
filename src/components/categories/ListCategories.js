@@ -13,7 +13,7 @@ export default class ListCategories extends Component {
   };
   render() {
     return (
-      <div className="col-sm-12 col-md-3 col-lg-2">
+      <div className="col-sm-12 col-md-2 col-lg-2">
         <ProductConsumer>
           {value => (
             <div class="input-group">
@@ -25,7 +25,7 @@ export default class ListCategories extends Component {
                 name="search"
                 value={this.state.search}
                 onChange={this.handleOnChange}
-                style={{ width: "170px" }}
+                style={{ width: "170px", height: "66px" }}
               />
               <div
                 class="input-group-append"
@@ -52,7 +52,9 @@ export default class ListCategories extends Component {
           )}
         </ProductConsumer>
 
-        <h3 style={{ marginBottom: "50px" }}>Les catégories</h3>
+        <h2 style={{ marginBottom: "30px", marginTop: "50px" }}>
+          Les catégories
+        </h2>
         <ProductConsumer>
           {value => {
             return (
