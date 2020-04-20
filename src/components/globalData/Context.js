@@ -14,6 +14,7 @@ class ProductProvider extends Component {
     cartSubTotal: 0,
     currentPage: 1,
     productsPerPage: 8,
+    recommandationProducts: [],
   };
 
   addAttributes = () => {
@@ -61,6 +62,18 @@ class ProductProvider extends Component {
     );
     this.setState({ products: productsFiltered });
     // this.calculatePages();
+  };
+
+  fetchRecommandationProducts = (idCat, idProd) => {
+    let recommandationProducts = this.state.copyProducts.filter(
+      (product) => product.idCat === idCat
+    );
+
+    recommandationProducts = recommandationProducts.filter(
+      (product) => product.id !== idProd
+    );
+
+    this.setState({ recommandationProducts });
   };
 
   componentDidUpdate = () => {
@@ -219,6 +232,7 @@ class ProductProvider extends Component {
         value={{
           ...this.state,
           currentProducts: currentProducts,
+          fetchRecommandationProducts: this.fetchRecommandationProducts,
           paginate: this.paginate,
           addToCart: this.addToCart,
           handleDetail: this.handleDetail,

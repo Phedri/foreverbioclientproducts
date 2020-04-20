@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { ProductConsumer, ProductContext } from "../globalData/Context";
 
+import ListRecommandations from "./ListRecommandations";
+
 export default class ProductDetail extends Component {
   state = {
     notif: false,
@@ -25,7 +27,11 @@ export default class ProductDetail extends Component {
 
   componentDidMount = () => {
     this.checkCategory();
-    console.log(this.context);
+    let value = this.context;
+    value.fetchRecommandationProducts(
+      value.detailProduct.idCat,
+      value.detailProduct.id
+    );
   };
 
   render() {
@@ -362,6 +368,7 @@ export default class ProductDetail extends Component {
                     </div>
                   </div>
                 </div>
+                <ListRecommandations products={value.recommandationProducts} />
               </div>
             );
           }}
