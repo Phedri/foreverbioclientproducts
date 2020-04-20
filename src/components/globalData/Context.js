@@ -55,7 +55,7 @@ class ProductProvider extends Component {
       });
   };
 
-  sortDesc = () => {
+  sortDateDesc = () => {
     const products = this.state.products.sort((a, b) => {
       if (a.id > b.id) return -1;
       if (a.id < b.id) return 1;
@@ -65,10 +65,30 @@ class ProductProvider extends Component {
     this.setState({ products });
   };
 
-  sortAsc = () => {
+  sortDateAsc = () => {
     const products = this.state.products.sort((a, b) => {
       if (a.id < b.id) return -1;
       if (a.id > b.id) return 1;
+      return 0;
+    });
+
+    this.setState({ products });
+  };
+
+  sortPrixDesc = () => {
+    const products = this.state.products.sort((a, b) => {
+      if (a.prix > b.prix) return -1;
+      if (a.prix < b.prix) return 1;
+      return 0;
+    });
+
+    this.setState({ products });
+  };
+
+  sortPrixAsc = () => {
+    const products = this.state.products.sort((a, b) => {
+      if (a.prix < b.prix) return -1;
+      if (a.prix > b.prix) return 1;
       return 0;
     });
 
@@ -252,8 +272,10 @@ class ProductProvider extends Component {
         value={{
           ...this.state,
           currentProducts: currentProducts,
-          sortAsc: this.sortAsc,
-          sortDesc: this.sortDesc,
+          sortDateAsc: this.sortDateAsc,
+          sortDateDesc: this.sortDateDesc,
+          sortPrixAsc: this.sortPrixAsc,
+          sortPrixDesc: this.sortPrixDesc,
           fetchRecommandationProducts: this.fetchRecommandationProducts,
           paginate: this.paginate,
           addToCart: this.addToCart,

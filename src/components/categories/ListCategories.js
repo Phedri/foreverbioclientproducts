@@ -53,14 +53,33 @@ export default class ListCategories extends Component {
                 <span>Trier par date d'ajout : </span>
                 <button
                   class="btn btn-outline-secondary"
-                  onClick={value.sortAsc}
+                  onClick={value.sortDateAsc}
                   style={{ marginTop: "10px", marginRight: "7px" }}
                 >
                   <i class="fas fa-sort-up" />
                 </button>
                 <button
                   class="btn btn-outline-secondary"
-                  onClick={value.sortDesc}
+                  onClick={value.sortDateDesc}
+                  style={{ marginTop: "10px" }}
+                >
+                  <i class="fas fa-sort-down" />
+                </button>
+
+                <br />
+                <br />
+
+                <span>Trier par prix : </span>
+                <button
+                  class="btn btn-outline-secondary"
+                  onClick={value.sortPrixAsc}
+                  style={{ marginTop: "10px", marginRight: "7px" }}
+                >
+                  <i class="fas fa-sort-up" />
+                </button>
+                <button
+                  class="btn btn-outline-secondary"
+                  onClick={value.sortPrixDesc}
                   style={{ marginTop: "10px" }}
                 >
                   <i class="fas fa-sort-down" />
