@@ -4,18 +4,18 @@ import { ProductConsumer } from "../globalData/Context";
 
 export default class ListCategories extends Component {
   state = {
-    search: ""
+    search: "",
   };
-  handleOnChange = e => {
+  handleOnChange = (e) => {
     e.preventDefault();
 
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
     return (
-      <div className="col-sm-12 col-md-2 col-lg-2">
+      <div className="col-sm-12 col-md-3 col-lg-3">
         <ProductConsumer>
-          {value => (
+          {(value) => (
             <div class="input-group">
               <input
                 autocomplete="off"
@@ -25,7 +25,7 @@ export default class ListCategories extends Component {
                 name="search"
                 value={this.state.search}
                 onChange={this.handleOnChange}
-                style={{ width: "170px", height: "66px" }}
+                style={{ width: "200px", height: "66px" }}
               />
               <div
                 class="input-group-append"
@@ -35,7 +35,7 @@ export default class ListCategories extends Component {
                 <button
                   class="btn btn-outline-secondary"
                   type="button"
-                  onClick={e => value.searchProduct(e, this.state.search)}
+                  onClick={(e) => value.searchProduct(e, this.state.search)}
                   style={{ backgroundColor: "#27b574", color: "white" }}
                 >
                   <i class="fas fa-search" />
@@ -52,11 +52,9 @@ export default class ListCategories extends Component {
           )}
         </ProductConsumer>
 
-        <h2 style={{ marginBottom: "30px", marginTop: "50px" }}>
-          Les catégories
-        </h2>
+        <h2 style={{ marginBottom: "30px", marginTop: "50px" }}>Catégories</h2>
         <ProductConsumer>
-          {value => {
+          {(value) => {
             return (
               <>
                 <h4

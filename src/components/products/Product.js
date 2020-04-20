@@ -6,7 +6,7 @@ import { ProductConsumer } from "../globalData/Context";
 
 export default class Product extends Component {
   state = {
-    nomCat: ""
+    nomCat: "",
   };
 
   checkCategory = () => {
@@ -37,19 +37,19 @@ export default class Product extends Component {
       etat,
       prix,
       qte,
-      url
+      url,
     } = this.props.product;
     return (
       <>
         <div
-          className="grid-item kids col-sm-12 col-md-4 col-lg-3"
+          className="grid-item kids col-sm-12 col-md-4 col-lg-4"
           style={{ display: "block" }}
         >
           <div className="grid-item__content-wrapper">
             <div className="ps-shoe mb-30">
               <div className="ps-shoe__thumbnail">
-                <div className="ps-badge">
-                  <span>Bio</span>
+                <div className="ps-badge" style={{ width: "40px" }}>
+                  <span style={{ fontSize: "12px" }}>Bio</span>
                 </div>
                 {/* <div className="ps-badge ps-badge--sale ps-badge--2nd">
                   <span>bio</span>
@@ -60,11 +60,11 @@ export default class Product extends Component {
                 <img
                   src={url}
                   alt={nom}
-                  style={{ height: "250px", width: "250px" }}
+                  style={{ height: "170px", width: "200px" }}
                 />
 
                 <ProductConsumer>
-                  {value => {
+                  {(value) => {
                     return (
                       <Link
                         to="/detail"
@@ -79,7 +79,7 @@ export default class Product extends Component {
                 <div className="ps-shoe__variants">
                   <div className="ps-shoe__variant normal">
                     <ProductConsumer>
-                      {value => (
+                      {(value) => (
                         <button
                           class="ps-cart__toggle"
                           style={{ marginLeft: "230px", maginTop: "10px" }}
@@ -110,7 +110,7 @@ export default class Product extends Component {
                   <a
                     className="ps-shoe__name"
                     href="#"
-                    style={{ fontSize: "20px" }}
+                    style={{ fontSize: "16px" }}
                   >
                     {nom}
                   </a>
@@ -119,7 +119,10 @@ export default class Product extends Component {
                   <p className="ps-shoe__categories">
                     <a href="#">{this.state.nomCat}</a>
                   </p>
-                  <span className="ps-shoe__price">
+                  <span
+                    className="ps-shoe__price"
+                    style={{ fontSize: "16px", marginTop: "25px" }}
+                  >
                     {/* <del>{prix + 12}DH</del> */}
                     {prix}DH
                   </span>
