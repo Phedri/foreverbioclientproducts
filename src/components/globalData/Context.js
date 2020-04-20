@@ -33,7 +33,11 @@ class ProductProvider extends Component {
   fetchProducts = () => {
     axios.get("http://localhost:9092/product").then((res) => {
       const products = res.data;
-      this.setState({ products: products, copyProducts: products });
+      this.setState({
+        products: products,
+        copyProducts: products,
+        currentPage: 1,
+      });
       this.addAttributes();
     });
   };
@@ -51,11 +55,12 @@ class ProductProvider extends Component {
   };
 
   filterProductsByIdCat = (idCat) => {
+    this.setState({ currentPage: 1 });
     const productsFiltered = this.state.copyProducts.filter(
       (product) => product.idCat === idCat
     );
     this.setState({ products: productsFiltered });
-    this.calculatePages();
+    // this.calculatePages();
   };
 
   componentDidUpdate = () => {
