@@ -55,6 +55,26 @@ class ProductProvider extends Component {
       });
   };
 
+  sortDesc = () => {
+    const products = this.state.products.sort((a, b) => {
+      if (a.id > b.id) return -1;
+      if (a.id < b.id) return 1;
+      return 0;
+    });
+
+    this.setState({ products });
+  };
+
+  sortAsc = () => {
+    const products = this.state.products.sort((a, b) => {
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      return 0;
+    });
+
+    this.setState({ products });
+  };
+
   filterProductsByIdCat = (idCat) => {
     this.setState({ currentPage: 1 });
     const productsFiltered = this.state.copyProducts.filter(
@@ -232,6 +252,8 @@ class ProductProvider extends Component {
         value={{
           ...this.state,
           currentProducts: currentProducts,
+          sortAsc: this.sortAsc,
+          sortDesc: this.sortDesc,
           fetchRecommandationProducts: this.fetchRecommandationProducts,
           paginate: this.paginate,
           addToCart: this.addToCart,

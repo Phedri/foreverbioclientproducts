@@ -47,6 +47,24 @@ export default class ListCategories extends Component {
                 >
                   <i class="fas fa-sync-alt" />
                 </button>
+
+                <hr />
+
+                <span>Trier par date d'ajout : </span>
+                <button
+                  class="btn btn-outline-secondary"
+                  onClick={value.sortAsc}
+                  style={{ marginTop: "10px", marginRight: "7px" }}
+                >
+                  <i class="fas fa-sort-up" />
+                </button>
+                <button
+                  class="btn btn-outline-secondary"
+                  onClick={value.sortDesc}
+                  style={{ marginTop: "10px" }}
+                >
+                  <i class="fas fa-sort-down" />
+                </button>
               </div>
             </div>
           )}
