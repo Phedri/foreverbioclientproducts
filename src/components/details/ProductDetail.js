@@ -25,15 +25,6 @@ export default class ProductDetail extends Component {
     }
   };
 
-  componentDidMount = () => {
-    this.checkCategory();
-    let value = this.context;
-    value.fetchRecommandationProducts(
-      value.detailProduct.idCat,
-      value.detailProduct.id
-    );
-  };
-
   render() {
     return (
       <>

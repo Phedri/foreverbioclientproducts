@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import axios from "axios";
 
+import _ from "lodash";
+
 const ProductContext = React.createContext();
 
 class ProductProvider extends Component {
@@ -18,6 +20,19 @@ class ProductProvider extends Component {
     bestSellers: [],
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const storeDetailProduct = JSON.parse(
+      localStorage.getItem("detailProduct")
+    );
+    if (_.isEmpty(prevState.detailProduct)) {
+      this.setState({
+        detailProduct: storeDetailProduct,
+      });
+
+      console.log(this.state.recommandationProducts);
+    }
+  }
+
   addAttributes = () => {
     this.state.products.forEach((product) => {
       product.count = 1;
@@ -31,17 +46,17 @@ class ProductProvider extends Component {
     });
   };
 
-  fetchProducts = () => {
-    axios.get("http://localhost:9092/product").then((res) => {
-      const products = res.data;
-      this.setState({
-        products: products,
-        copyProducts: products,
-        currentPage: 1,
-      });
-      this.addAttributes();
-      this.fetchBestSellers();
+  fetchProducts = async () => {
+    let res = await axios.get("http://localhost:9092/product");
+    let products = res.data;
+    this.setState({
+      products: products,
+      copyProducts: products,
+      currentPage: 1,
     });
+    this.addAttributes();
+    this.fetchBestSellers();
+    return products;
   };
 
   fetchBestSellers = () => {
@@ -117,8 +132,8 @@ class ProductProvider extends Component {
     // this.calculatePages();
   };
 
-  fetchRecommandationProducts = (idCat, idProd) => {
-    let recommandationProducts = this.state.copyProducts.filter(
+  fetchRecommandationProducts = (idCat, idProd, products) => {
+    let recommandationProducts = products.filter(
       (product) => product.idCat === idCat
     );
 
@@ -129,12 +144,18 @@ class ProductProvider extends Component {
     this.setState({ recommandationProducts });
   };
 
-  componentDidUpdate = () => {
-    this.calculatePages();
-  };
-
-  componentDidMount = () => {
-    this.fetchProducts();
+  componentDidMount = async () => {
+    const products = await this.fetchProducts();
+    console.log(products);
+    const storeDetailProduct = JSON.parse(
+      localStorage.getItem("detailProduct")
+    );
+    this.fetchRecommandationProducts(
+      storeDetailProduct.idCat,
+      storeDetailProduct.id,
+      products
+    );
+    console.log(this.state.recommandationProducts);
   };
 
   getItem = (id) => {
@@ -145,6 +166,7 @@ class ProductProvider extends Component {
   handleDetail = (id) => {
     const product = this.getItem(id);
     this.setState(() => {
+      localStorage.setItem("detailProduct", JSON.stringify(product));
       return { detailProduct: product };
     });
   };
