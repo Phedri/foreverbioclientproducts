@@ -15,6 +15,7 @@ class ProductProvider extends Component {
     currentPage: 1,
     productsPerPage: 8,
     recommandationProducts: [],
+    bestSellers: [],
   };
 
   addAttributes = () => {
@@ -28,7 +29,6 @@ class ProductProvider extends Component {
         product.count = 0;
       }
     });
-    console.log(this.state.products);
   };
 
   fetchProducts = () => {
@@ -40,7 +40,20 @@ class ProductProvider extends Component {
         currentPage: 1,
       });
       this.addAttributes();
+      this.fetchBestSellers();
     });
+  };
+
+  fetchBestSellers = () => {
+    let bestSellers = this.state.products.sort((a, b) => {
+      if (a.nbVentes > b.nbVentes) return -1;
+      if (a.nbVentes < b.nbVentes) return 1;
+      return 0;
+    });
+
+    bestSellers = bestSellers.slice(0, 4);
+
+    this.setState({ bestSellers });
   };
 
   searchProduct = (e, search) => {
