@@ -9,25 +9,29 @@ import ListProducts from "./components/products/ListProducts";
 import Cart from "./components/cart/Cart";
 import ProductDetail from "./components/details/ProductDetail";
 
+import ScrollToTop from "./ScrollToTop";
+
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Switch>
-          <Route path="/" exact>
-            <ListProducts />
-          </Route>
-          <Route path="/cart">
-            <Cart />
-          </Route>
-          <Route path="/detail">
-            <ProductDetail />
-          </Route>
-        </Switch>
+      <ScrollToTop>
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route path="/" exact>
+              <ListProducts />
+            </Route>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+            <Route path="/detail">
+              <ProductDetail />
+            </Route>
+          </Switch>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </ScrollToTop>
     </Router>
   );
 }
