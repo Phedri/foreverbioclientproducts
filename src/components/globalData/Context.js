@@ -11,11 +11,13 @@ class ProductProvider extends Component {
     detailProduct: {},
     nomCat: "",
     cart: [],
-    cartSubTotal: 0
+    cartSubTotal: 0,
+    currentPage: 1,
+    productsPerPage: 8,
   };
 
   addAttributes = () => {
-    this.state.products.forEach(product => {
+    this.state.products.forEach((product) => {
       product.count = 1;
       product.total = product.prix * product.count;
       if (
@@ -29,7 +31,7 @@ class ProductProvider extends Component {
   };
 
   fetchProducts = () => {
-    axios.get("http://localhost:9092/product").then(res => {
+    axios.get("http://localhost:9092/product").then((res) => {
       const products = res.data;
       this.setState({ products: products, copyProducts: products });
       this.addAttributes();
@@ -40,38 +42,43 @@ class ProductProvider extends Component {
     e.preventDefault();
     axios
       .post("http://localhost:9092/product/search", {
-        text: search
+        text: search,
       })
-      .then(res => {
+      .then((res) => {
         const products = res.data;
         this.setState({ products });
       });
   };
 
-  filterProductsByIdCat = idCat => {
+  filterProductsByIdCat = (idCat) => {
     const productsFiltered = this.state.copyProducts.filter(
-      product => product.idCat === idCat
+      (product) => product.idCat === idCat
     );
     this.setState({ products: productsFiltered });
+    this.calculatePages();
+  };
+
+  componentDidUpdate = () => {
+    this.calculatePages();
   };
 
   componentDidMount = () => {
     this.fetchProducts();
   };
 
-  getItem = id => {
-    const product = this.state.products.find(item => item.id === id);
+  getItem = (id) => {
+    const product = this.state.products.find((item) => item.id === id);
     return product;
   };
 
-  handleDetail = id => {
+  handleDetail = (id) => {
     const product = this.getItem(id);
     this.setState(() => {
       return { detailProduct: product };
     });
   };
 
-  addToCart = id => {
+  addToCart = (id) => {
     console.log("hello from add to cart");
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
@@ -92,11 +99,11 @@ class ProductProvider extends Component {
     );
   };
 
-  removeItem = id => {
+  removeItem = (id) => {
     let tempProducts = [...this.state.products];
     let tempCart = [...this.state.cart];
 
-    tempCart = tempCart.filter(item => item.id !== id);
+    tempCart = tempCart.filter((item) => item.id !== id);
 
     const index = tempProducts.indexOf(this.getItem(id));
     let removedProduct = tempProducts[index];
@@ -109,7 +116,7 @@ class ProductProvider extends Component {
       () => {
         return {
           cart: [...tempCart],
-          products: [...tempProducts]
+          products: [...tempProducts],
         };
       },
       () => {
@@ -133,7 +140,7 @@ class ProductProvider extends Component {
     }
   };
 
-  increment = id => {
+  increment = (id) => {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
@@ -153,7 +160,7 @@ class ProductProvider extends Component {
     );
   };
 
-  decrement = id => {
+  decrement = (id) => {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
@@ -175,20 +182,39 @@ class ProductProvider extends Component {
 
   addTotals = () => {
     let subTotal = 0;
-    this.state.cart.map(item => (subTotal += item.total));
+    this.state.cart.map((item) => (subTotal += item.total));
 
     this.setState(() => {
       return {
-        cartSubTotal: subTotal
+        cartSubTotal: subTotal,
       };
     });
   };
 
+  paginate = (number) => {
+    this.setState({ currentPage: number });
+  };
+
+  calculatePages = () => {
+    const indexOfLastProduct =
+      this.state.currentPage * this.state.productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - this.state.productsPerPage;
+    const currentProducts = this.state.products.slice(
+      indexOfFirstProduct,
+      indexOfLastProduct
+    );
+
+    return currentProducts;
+  };
+
   render() {
+    const currentProducts = this.calculatePages();
     return (
       <ProductContext.Provider
         value={{
           ...this.state,
+          currentProducts: currentProducts,
+          paginate: this.paginate,
           addToCart: this.addToCart,
           handleDetail: this.handleDetail,
           removeItem: this.removeItem,
@@ -196,7 +222,7 @@ class ProductProvider extends Component {
           decrement: this.decrement,
           searchProduct: this.searchProduct,
           fetchProducts: this.fetchProducts,
-          filterProductsByIdCat: this.filterProductsByIdCat
+          filterProductsByIdCat: this.filterProductsByIdCat,
         }}
       >
         {this.props.children}

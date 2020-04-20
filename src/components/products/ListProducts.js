@@ -6,6 +6,8 @@ import Advertising from "../layout/Advertising";
 import { ProductConsumer } from "../globalData/Context";
 import ListCategories from "../categories/ListCategories";
 
+import { Pagination } from "../layout/Pagination";
+
 export default class ListProducts extends Component {
   state = {
     search: "",
@@ -21,42 +23,6 @@ export default class ListProducts extends Component {
             <h3 class="ps-section__title" data-mask="produits bio">
               - Découvrez nos produits bio
             </h3>
-
-            {/* <ul
-              class="ps-masonry__filter"
-              styles={{ display: "flex", color: "red" }}
-            >
-              <li class="current">
-                <a href="#" data-filter="*">
-                  Tout <sup>8</sup>
-                </a>
-              </li>
-              <li>
-                <a href="#" data-filter=".visage">
-                  Visage <sup>1</sup>
-                </a>
-              </li>
-              <li>
-                <a href="#" data-filter=".cheveux">
-                  Cheveux <sup>1</sup>
-                </a>
-              </li>
-              <li>
-                <a href="#" data-filter=".huile">
-                  Huile <sup>1</sup>
-                </a>
-              </li>
-              <li>
-                <a href="#" data-filter=".peau">
-                  Peau <sup>1</sup>
-                </a>
-              </li>
-              <li>
-                <a href="#" data-filter=".aliment">
-                  Aliment <sup>1</sup>
-                </a>
-              </li>
-            </ul> */}
           </div>
           <div class="ps-section__content pb-50">
             <div
@@ -73,10 +39,20 @@ export default class ListProducts extends Component {
                 <div className="col-md-9 col-lg-9">
                   <ProductConsumer>
                     {(value) => {
-                      return value.products.map((product) => (
+                      return value.currentProducts.map((product) => (
                         <Product key={product.id} product={product} />
                       ));
                     }}
+                  </ProductConsumer>
+
+                  <ProductConsumer>
+                    {(value) => (
+                      <Pagination
+                        productsPerPage={value.productsPerPage}
+                        totalProducts={value.products.length}
+                        paginate={value.paginate}
+                      />
+                    )}
                   </ProductConsumer>
                 </div>
               </div>
