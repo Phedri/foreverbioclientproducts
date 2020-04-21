@@ -24,7 +24,7 @@ class ProductProvider extends Component {
     const storeDetailProduct = JSON.parse(
       localStorage.getItem("detailProduct")
     );
-    if (_.isEmpty(prevState.detailProduct)) {
+    if (!_.isEqual(prevState.detailProduct, storeDetailProduct)) {
       this.setState({
         detailProduct: storeDetailProduct,
       });
@@ -150,11 +150,14 @@ class ProductProvider extends Component {
     const storeDetailProduct = JSON.parse(
       localStorage.getItem("detailProduct")
     );
-    this.fetchRecommandationProducts(
-      storeDetailProduct.idCat,
-      storeDetailProduct.id,
-      products
-    );
+    if (!_.isEmpty(storeDetailProduct)) {
+      this.fetchRecommandationProducts(
+        storeDetailProduct.idCat,
+        storeDetailProduct.id,
+        products
+      );
+    }
+
     console.log(this.state.recommandationProducts);
   };
 
