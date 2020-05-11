@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { ProductConsumer } from "../globalData/Context";
+import { Breadcrumb, BreadcrumbItem, Label, CustomInput, FormGroup, Form } from 'reactstrap';
 
-export default class Cart extends Component {
+export default class ValidateOrder extends Component {
   render() {
     return (
       <>
@@ -12,6 +13,30 @@ export default class Cart extends Component {
           {(value) => {
             return (
               <div class="ps-content pt-80 pb-80">
+                   <h3 class="ps-section__title" data-mask="Ma COMMANDE">Réglement de commande</h3>
+
+<Breadcrumb style={{
+    margin: '36px',
+    textAlign: 'left',
+    display: "flex",
+    flexWrap: "wrap",
+}}>
+    <BreadcrumbItem><a href="/">Home</a></BreadcrumbItem>
+    <BreadcrumbItem><a href="/cart">Panier</a></BreadcrumbItem>
+    <BreadcrumbItem style={{
+        color: "#2ac37d",
+        fontWeight: "bold"
+
+
+    }} active>Commande</BreadcrumbItem>
+</Breadcrumb>
+
+<h2 style={{
+    marginLeft: '36px',
+    marginBottom: '24px',
+}}>
+    Détails commande
+</h2>
                 <div class="ps-container">
                   <div class="ps-cart-listing">
                     <table class="table ps-cart__table">
@@ -78,35 +103,40 @@ export default class Cart extends Component {
                         ))}
                       </tbody>
                     </table>
-                    <div class="ps-cart__actions">
-                      <div class="ps-cart__promotion">
-                        <div class="form-group">
-                          <div class="ps-form--icon">
-                            <i class="fa fa-angle-right"></i>
+                              <ProductConsumer>{(value) => (<div class="ps-cart__actions">
+                      <div className="ps-cart__promotion">
+                        <div className="form-group">
+                          <div className="ps-form--icon">
+                            <i className="fa fa-angle-right"></i>
                             <input
-                              class="form-control"
+                              className="form-control"
                               type="text"
                               placeholder="Promo Code"
                             />
                           </div>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                           <Link to="/">
-                            <button class="ps-btn ps-btn--gray">
+                            <button className="ps-btn ps-btn--gray">
                               Poursuivre ses achats
                             </button>
                           </Link>
                         </div>
                       </div>
-                      <div class="ps-cart__total">
+                      <div className="ps-cart__total">
                         <h3>
                           Prix Total: <span>{value.cartSubTotal}DH</span>
                         </h3>
-                        <a class="ps-btn" href="/checkout">
-                          Commander<i class="ps-icon-next"></i>
-                        </a>
+                        <Link to="/thankyouPage">
+                        <button className="ps-btn danger" onClick={()=> {
+                            
+                            console.log("U clicked");
+                            value.addCommande(value.cartToCommande())}}>
+                         Valider ordre<i class="ps-icon-next"></i>
+                        </button></Link>
                       </div>
-                    </div>
+                    </div>)}</ProductConsumer>
+                    
                   </div>
                 </div>
               </div>
