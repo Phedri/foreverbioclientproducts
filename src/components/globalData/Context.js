@@ -14,7 +14,6 @@ class ProductProvider extends Component {
     detailProduct: {},
     user:[],
     nomCat: "",
-    idUser:0,
     cart: [],
     cartSubTotal: 0,
     currentPage: 1,
@@ -22,6 +21,7 @@ class ProductProvider extends Component {
     recommandationProducts: [],
     bestSellers: [],
     id:0,
+    idUser:0,
     email:"",
   };
 
@@ -57,7 +57,7 @@ class ProductProvider extends Component {
 
   fetchFavoris = () => {
 
-    axios.get("http://localhost:9092/User/3").then((res) => {
+    axios.get("http://localhost:9092/User/"+this.state.idUser).then((res) => {
       const favoris = res.data;
       this.setState({
         favorisProduct: favoris,
@@ -82,7 +82,7 @@ class ProductProvider extends Component {
   AddFavoris = (id) =>{
     console.log(this.state);
     axios.post('http://localhost:9092/favoris',{
-      idUser: this.state.idUser,
+      idUser: "3",
       id : id
     })
         .then(response =>{
