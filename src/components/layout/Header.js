@@ -1,12 +1,19 @@
-import React, { Component } from "react";
+import React, { Component , StrictMode} from "react";
 
 import { Link } from "react-router-dom";
 
 import { ProductConsumer } from "../globalData/Context";
+import { Button, } from 'reactstrap';
+import Popover from '@material-ui/core/Popover';
+import SimplePopOver from '../popover'
+import Example from '../popover';
 
 export default class Header extends Component {
+
   state = {
     search: "",
+
+
   };
 
   handleOnChange = (e) => {
@@ -15,9 +22,16 @@ export default class Header extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+
+
+
   render() {
     return (
       <>
+      <ProductConsumer>
+      {(value) => {
+                        return (
+                          <div>
         <div class="header--sidebar" />
         <header class="header">
           <div class="header__top">
@@ -28,71 +42,7 @@ export default class Header extends Component {
                     Avenue Ibn Sina, Rabat, Maroc Téléphone : +212 5377-71905
                   </p>
                 </div>
-                <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                  <div class="header__actions">
-                    <a href="#">Se connecter & S'inscrire</a>
-                    <div class="btn-group ps-dropdown">
-                      <a
-                        class="dropdown-toggle"
-                        href="#"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        MAD
-                        <i class="fa fa-angle-down" />
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a href="#">
-                            <img src="images/flag/maroc.svg" alt="" /> MAD
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <img src="images/flag/usa.svg" alt="" /> USD
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <img src="images/flag/singapore.svg" alt="" /> SGD
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <img src="images/flag/japan.svg" alt="" /> JPN
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="btn-group ps-dropdown">
-                      <a
-                        class="dropdown-toggle"
-                        href="#"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Langue
-                        <i class="fa fa-angle-down" />
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a href="#">Français</a>
-                        </li>
-                        <li>
-                          <a href="#">Anglais</a>
-                        </li>
-                        <li>
-                          <a href="#">Espagnol</a>
-                        </li>
-                        <li>
-                          <a href="#">Allemand</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                    <SimplePopOver connectUser={value.connectUser} user={value.user} disconnectUser={value.disconnectUser} signUpUser={value.signUpUser}></SimplePopOver>
               </div>
             </div>
           </div>
@@ -303,7 +253,8 @@ export default class Header extends Component {
               </div>
             </div>
           </nav>
-        </header>
+        </header></div>)}}
+        </ProductConsumer>
       </>
     );
   }

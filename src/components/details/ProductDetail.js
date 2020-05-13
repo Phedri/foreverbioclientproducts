@@ -118,7 +118,13 @@ export default class ProductDetail extends Component {
                             CHOISIR LA QUANTITÉ
                             <p>Quantité en STOCK: {value.detailProduct.qte}</p>
                           </h4>
-                          <div class="container">
+                          <div class="container" style={{
+                           marginLeft: "-90%",
+                           marginRight: "auto",
+                           textAlign: "center",
+                           left:"50%",
+                           
+                          }}>
                             <ProductConsumer>
                               {(value) => {
                                 return (
@@ -141,6 +147,7 @@ export default class ProductDetail extends Component {
                                       style={{
                                         width: "100px",
                                         display: "inline-block",
+                                        margin: "auto auto"
                                       }}
                                       data-value
                                       type="text"

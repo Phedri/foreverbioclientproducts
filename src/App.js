@@ -9,6 +9,11 @@ import ListProducts from "./components/products/ListProducts";
 import Cart from "./components/cart/Cart";
 import ProductDetail from "./components/details/ProductDetail";
 
+import CheckoutPage from "./components/order/checkout"
+import ValidateOrder from "./components/order/validateOrder"
+import ThankYouPage from "./components/order/thankyouPage"
+
+
 import ScrollToTop from "./ScrollToTop";
 
 function App() {
@@ -26,6 +31,15 @@ function App() {
             </Route>
             <Route path="/detail">
               <ProductDetail />
+            </Route>
+            <Route path="/checkout">
+              <CheckoutPage />
+            </Route>
+            <Route path="/validateOrder">
+              <ValidateOrder />
+            </Route>
+            <Route path="/thankyouPage">
+              <ThankYouPage />
             </Route>
           </Switch>
 
