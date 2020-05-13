@@ -18,6 +18,7 @@ class ProductProvider extends Component {
     productsPerPage: 8,
     recommandationProducts: [],
     bestSellers: [],
+    user: JSON.parse(localStorage.getItem('user')) || null,
   };
 
 
@@ -27,6 +28,7 @@ class ProductProvider extends Component {
     var detailProduct = JSON.parse(localStorage.getItem( 'detailProduct' )) || 1;
     var nomCat = JSON.parse(localStorage.getItem( 'nomCat' )) || 1;
     var cart = JSON.parse(localStorage.getItem( 'cart' )) || 1;
+    var user = JSON.parse(localStorage.getItem( 'user' )) || 1;
     var cartSubTotal = localStorage.getItem( 'cartSubTotal' )|| 1;
     var currentPage = JSON.parse(localStorage.getItem( 'currentPage' )) || 1;
     var productsPerPage = JSON.parse(localStorage.getItem( 'productsPerPage' )) || 1;
@@ -67,6 +69,45 @@ class ProductProvider extends Component {
       }
     });
   };
+
+  connectUser = async (email,password) => {
+    let res = await axios.post("http://localhost:9092/signIn",{
+      email: email,
+      password: password,
+    });
+    let user = res.data;
+    this.setState({
+      user: user,
+    });
+    console.log(this.state.user);
+    localStorage.setItem('user',JSON.stringify(user));
+
+    if (user!== null && user !== ""){
+      console.log("the user is not null")
+      return true;
+    }
+    console.log("the user is null")
+    return false;
+  }
+
+  signUpUser = async (email,firstName,lastName,password,birthDate,url) => {
+    await axios.post("http://localhost:9092/user",{
+      email: email,
+      password: password,
+      firstName:firstName,
+      lastName:lastName,
+      birthDate:birthDate,
+      url:url,
+      role:"Utilisateur"
+    }).then((data)=>{
+      this.connectUser(email,password);
+    });
+  }
+
+  disconnectUser = async  () => {
+    localStorage.setItem('user',null);
+
+  }
 
   fetchProducts = async () => {
     let res = await axios.get("http://localhost:9092/product");
@@ -394,6 +435,9 @@ class ProductProvider extends Component {
           filterProductsByIdCat: this.filterProductsByIdCat,
           addCommande: this.addCommande,
           cartToCommande: this.cartToCommande,
+          connectUser: this.connectUser,
+          disconnectUser: this.disconnectUser,
+          signUpUser: this.signUpUser,
         }}
       >
         {this.props.children}
