@@ -282,9 +282,15 @@ class ProductProvider extends Component {
 
     this.setState(
       () => {
-      localStorage.setItem("cart", JSON.stringify([...this.state.cart, product]));
-      console.log([...this.state.cart, product]);
-        return { products: tempProducts, cart: [...this.state.cart, product] };
+        if (this.state.cart.length > 0) {
+          localStorage.setItem("cart", JSON.stringify([...this.state.cart, product]));
+          console.log([...this.state.cart, product]);
+            return { products: tempProducts, cart: [...this.state.cart, product] };
+        }
+
+        localStorage.setItem("cart", JSON.stringify([ product]));
+            return { products: tempProducts, cart: [product] };
+        
       },
       () => {
         //every time we add an element in the cart, we'll callback the function to calculate the totals
