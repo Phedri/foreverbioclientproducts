@@ -1,14 +1,86 @@
 import React, { Component } from "react";
-
+import axios from 'axios';
+import {Button} from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import BeautyStars from 'beauty-stars';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import { ProductConsumer, ProductContext } from "../globalData/Context";
+import {Link} from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
 
 import ListRecommandations from "./ListRecommandations";
 
 export default class ProductDetail extends Component {
+
   state = {
     notif: false,
     nomCat: "",
+    value: 1,
+    show : false,
   };
+
+
+
+  constructor(props)
+      {
+    super(props)
+    this.state = { idProd: null,comm: '',rating: null, comments : [],value : null}
+
+      }
+
+  initialState = { rating: null, comm: '',lastName: [], firstName:[], url:[]};
+  handleModal()
+       {      this.setState({show: !this.state.show}) }
+
+
+    ChangeHandler = (event) =>{
+    this.setState({ [event.target.name] : event.target.value });
+    this.setState({rating : ''+this.state.value+'' });
+    this.setState({idProd :''+ this.context.detailProduct.id+''});
+    }
+
+    deleteComment = (commentId) =>
+         {        axios.delete("http://localhost:9092/comment/"+ commentId)
+                  .then(response => {
+                  if(response.data != null){
+                  this.setState({
+                  comments: this.state.comments.filter(comment => comment.id !== commentId)
+                   });  }  });       }
+
+
+     handleSubmit = event => {
+    console.log(this.state);
+    console.log(this.state.idProd);
+
+     event.preventDefault()
+     axios({
+                                 method: 'POST',
+                                 url: 'http://localhost:9092/comment/add/'+localStorage.getItem('idUser'),
+                                 data: {
+                                          rating: this.state.rating,
+                                          comm: this.state.comm,
+                                          idProd: this.state.idProd,
+                                          }  })
+                                 .then( response => {
+                                 if(response.data != null){
+                                 this.setState(this.initialState);
+                                 window.location.reload(true);
+                                  }  });
+
+     }
+
+
+
+    componentDidMount = () => {
+    const storeDetailProduct = JSON.parse(
+          localStorage.getItem("detailProduct")
+        );
+      this.setState({idProd : storeDetailProduct.id});
+      axios.get("http://localhost:9092/comments/"+storeDetailProduct.id)
+                                    .then(response => response.data)
+                                    .then((data) => {
+                                    this.setState({comments: data});   });
+    };
 
   checkCategory = () => {
     const { idCat } = this.context.detailProduct;
@@ -25,17 +97,10 @@ export default class ProductDetail extends Component {
     }
   };
 
-  componentDidMount = () => {
-    this.checkCategory();
-    let value = this.context;
-    value.fetchRecommandationProducts(
-      value.detailProduct.idCat,
-      value.detailProduct.id
-    );
-  };
-
   render() {
-    return (
+  console.log(this.context.detailProduct.id);
+  console.log(this.state.idProd);
+  return (
       <>
         <ProductConsumer>
           {(value) => {
@@ -230,105 +295,88 @@ export default class ProductDetail extends Component {
                         </ul>
                       </div>
                       <div class="tab-content mb-60">
-                        <div
-                          class="tab-pane active"
-                          role="tabpanel"
-                          id="tab_01"
-                        >
-                          <p>{value.detailProduct.description}</p>
-                          <p>{value.detailProduct.source}</p>
-                        </div>
-                        <div class="tab-pane" role="tabpanel" id="tab_02">
-                          <p class="mb-20">
-                            1 commentaire pour <strong>PRODUIT</strong>
-                          </p>
-                          <div class="ps-review">
-                            <div class="ps-review__thumbnail">
-                              <img src="images/user/1.jpg" alt="" />
-                            </div>
-                            <div class="ps-review__content" id="comm">
-                              <header>
-                                <select class="ps-rating">
-                                  <option value="1">1</option>
-                                  <option value="1">2</option>
-                                  <option value="1">3</option>
-                                  <option value="1">4</option>
-                                  <option value="5">5</option>
-                                </select>
-                                <p>
-                                  By<a href=""> Alena Studio</a> - November 25,
-                                  2017
-                                </p>
-                              </header>
-                              <p>
-                                Soufflé danish gummi bears tart. Pie wafer
-                                icing. Gummies jelly beans powder. Chocolate bar
-                                pudding macaroon candy canes chocolate apple pie
-                                chocolate cake. Sweet caramels sesame snaps
-                                halvah bear claw wafer. Sweet roll soufflé
-                                muffin topping muffin brownie. Tart bear claw
-                                cake tiramisu chocolate bar gummies dragée lemon
-                                drops brownie.
-                              </p>
-                            </div>
-                          </div>
-                          <form
-                            class="ps-product__review"
-                            action="_action"
-                            method="post"
-                          >
-                            <h4>AJOUTER VOTRE COMMENTAIRE</h4>
-                            <div class="row">
-                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                  <label>
-                                    Nom et Prénom:<span>*</span>
-                                  </label>
-                                  <input
-                                    class="form-control"
-                                    type="text"
-                                    placeholder=""
-                                  />
-                                </div>
-                                <div class="form-group">
-                                  <label>
-                                    Email:<span>*</span>
-                                  </label>
-                                  <input
-                                    class="form-control"
-                                    type="email"
-                                    placeholder=""
-                                  />
-                                </div>
-                                <div class="form-group">
-                                  <label>
-                                    Votre évaluation
-                                    <span />
-                                  </label>
-                                  <select class="ps-rating">
-                                    <option value="1">1</option>
-                                    <option value="1">2</option>
-                                    <option value="1">3</option>
-                                    <option value="1">4</option>
-                                    <option value="5">5</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                  <label>Votre Commentaire:</label>
-                                  <textarea class="form-control" rows="6" />
-                                </div>
-                                <div class="form-group">
-                                  <button class="ps-btn ps-btn--sm">
-                                    Soumettre
-                                    <i class="ps-icon-next" />
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
+                                              <div
+                                                class="tab-pane active"
+                                                role="tabpanel"
+                                                id="tab_01"
+                                              >
+                                                <p>{value.detailProduct.description}</p>
+                                                <p>{value.detailProduct.source}</p>
+                                              </div>
+                                              <div class="tab-pane" role="tabpanel" id="tab_02">
+                                              <h3 style={{color: "green"}}>Les commentaires : <br/><br/><br/></h3>
+                                              <div style={{ width: "900px", marginLeft:"30px", border: "green" , border: "3px double green"}}>
+                                              { this.state.comments.map(comment => {
+                                               return (
+                                               		<div id="comm"  style={{ width: "750px",height: "90px", marginLeft:"50px", marginTop:"10px"}}>
+                                                               {(() => {
+                                                               if (localStorage.getItem('idUser')==comment.user.id) {
+                                                                      return ( <><div style={{width: "80%"}}>
+                                                                               		<img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                               	 </div>
+                                                                               	 <div style={{marginLeft: "50px"}}>
+                                                                               			 <p class="form-control"><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm} </p>
+                                                                               			 <div style={{ marginLeft:"87%", marginTop:"-7%" }}>
+                                                                               			     <Button variant="danger" size="sm" onClick={this.deleteComment.bind(this, comment.id)}><FontAwesomeIcon icon={faTrash} style={{width:'10px'}}/></Button>
+                                                                               			 </div>
+                                                                               	</div>
+                                                                               </> ) }
+                                                               else {
+                                               		       return ( <><div>
+                                                                         <img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                      </div>
+                                                                      <div style={{marginLeft: "50px"}}>
+                                                                         <p class="form-control"><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm}     </p>
+                                                                      </div>
+                                                                                                                                                   </> )}
+                                                                      })()}
+                                                            </div> );} )}
+                                                <br/>
+                                                </div>
+                                               <div>
+                                                <form
+                                                  class="ps-product__review"
+                                                  onSubmit={this.handleSubmit} >
+                                                  <div>
+                                                  <br/><br/>
+                                                  <h3 style={{color: "green"}}>Ajouter votre commentaire : <br/><br/><br/> </h3>
+                                                  </div>
+                                                  <div>
+                                                          {(() => {
+                                                            if (localStorage.getItem('idUser')==null) {
+                                                              return (
+                                                                <div> <h4>Connectez-vous pour nous laisser un commentaire .</h4></div>
+                                                              )
+                                                            }
+                                                             else {
+                                                              return (
+
+                                                          <div class="row" style={{ width: "900px", marginLeft:"30px", border: "green" , border: "3px double green"}}>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 "><br/>
+                                                                    <div>
+                                                                        <BeautyStars value={this.state.value} onChange={value => this.setState({ value })} />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+                                                                     <div class="form-group">
+                                                                         <label><br/>Votre Commentaire:</label>
+                                                                         <textarea class="form-control" rows="6" name="comm" value={this.state.comm} onChange = {this.ChangeHandler} />
+                                                                     </div>
+                                                                     <div class="form-group">
+
+                                                                          <button class="ps-btn ps-btn--sm" type="submit"> Soumettre <i class="ps-icon-next" />
+                                                                          </button>
+                                                                     </div>
+                                                                </div>
+                                                          </div>
+                                                              )
+                                                            }
+                                                          })()}
+                                                        </div>
+                                                      </form>
+                                              </div>
+                                            </div>
+
                         <div class="tab-pane" role="tabpanel" id="tab_03">
                           <p>
                             Add your tag <span> *</span>

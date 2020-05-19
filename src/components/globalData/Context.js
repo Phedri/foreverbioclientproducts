@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 
 import axios from "axios";
+
+import _ from "lodash";
 import Authentification from "../profile/Authentification";
 
 const ProductContext = React.createContext();
 
 class ProductProvider extends Component {
-
   state = {
-    favorisProduct :[],
     products: [],
     copyProducts: [],
     detailProduct: {},
-    user:[],
     nomCat: "",
     cart: [],
     cartSubTotal: 0,
@@ -20,112 +19,12 @@ class ProductProvider extends Component {
     productsPerPage: 8,
     recommandationProducts: [],
     bestSellers: [],
-    id:0,
+    users: [],
     idUser:0,
     email:"",
   };
 
-
-  addAttributes = () => {
-    this.state.products.forEach((product) => {
-      product.count = 1;
-      product.total = product.prix * product.count;
-      if (
-        product.etat === "Rupture de stock" ||
-        product.etat === "Approvisionnement"
-      ) {
-        product.count = 0;
-      }
-    });
-  };
-
-  fetchProducts = () => {
-    axios.get("http://localhost:9092/product").then((res) => {
-      const products = res.data;
-      this.setState({
-        products: products,
-        copyProducts: products,
-        currentPage: 1,
-      });
-
-      this.addAttributes();
-      this.fetchBestSellers();
-
-
-    });
-  };
-
-  fetchFavoris = () => {
-
-    axios.get("http://localhost:9092/User/"+this.state.idUser).then((res) => {
-      const favoris = res.data;
-      this.setState({
-        favorisProduct: favoris,
-      });
-      console.log(this.state.favorisProduct);
-      this.addAttributes();
-      this.fetchBestSellers();
-    });
-  };
-
-  fetchBestSellers = () => {
-    let bestSellers = this.state.products.sort((a, b) => {
-      if (a.nbVentes > b.nbVentes) return -1;
-      if (a.nbVentes < b.nbVentes) return 1;
-      return 0;
-    });
-
-    bestSellers = bestSellers.slice(0, 4);
-
-    this.setState({ bestSellers });
-  };
-  AddFavoris = (id) =>{
-    console.log(this.state);
-    axios.post('http://localhost:9092/favoris',{
-      idUser: "3",
-      id : id
-    })
-        .then(response =>{
-          console.log(response)
-
-        })
-        .catch(error =>{
-          console.log(error)
-        })}
-  DeleteFavoris = (id) =>{
-    console.log(this.state);
-    axios.post('http://localhost:9092/favoris',{
-      id : id
-    })
-        .then(response =>{
-          console.log(response)
-
-        })
-        .catch(error =>{
-          console.log(error)
-        })}
-
-
-
-  changerHandler = e =>{
-
-    this.setState({[e.target.name]:e.target.value})
-  }
-
-  searchProduct = (e, search) => {
-    e.preventDefault();
-    axios
-      .post("http://localhost:9092/product/search", {
-        text: search,
-      })
-      .then((res) => {
-        const products = res.data;
-        this.setState({ products });
-      });
-
-  };
-
-  userByEmail =(email) => {
+userByEmail =(email) => {
     axios.get('http://localhost:9092/find/'+ email )
         .then((res) => {
           const User = res.data;
@@ -142,6 +41,8 @@ class ProductProvider extends Component {
           console.log(this.state.idUser)
         });
   };
+
+
   Passed = () =>{
     console.log("passsed")
     this.userByEmail(this.state.email);
@@ -170,6 +71,148 @@ class ProductProvider extends Component {
           console.log(error)
         })
   }
+
+  SignIn = (email,password) =>{
+    let errors = {}
+    console.log(this.state);
+    axios.post('http://localhost:9092/signIn',{
+      email:email,
+      password:password,
+    })
+        .then(response => {
+
+          console.log(response.data)
+          if ( response.data==='authentification réussite') {
+            // eslint-disable-next-line no-undef
+            console.log("authentification réussite")
+          }else{
+            alert("Email or password not correct");
+          }
+          console.log("heeeeeeeeeeeeyyyy")
+          Authentification.SaveEmail(email);
+          console.log("heeeeeeeeeeeeyyyy")
+          this.setState({
+            email: localStorage.getItem('email'),
+          });
+          console.log("Email:")
+          console.log(this.state.email)
+          this.Passed()
+        })
+        .catch(error =>{
+          console.log(error)
+        })
+
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const storeDetailProduct = JSON.parse(
+      localStorage.getItem("detailProduct")
+    );
+    if (!_.isEqual(prevState.detailProduct, storeDetailProduct)) {
+      this.setState({
+        detailProduct: storeDetailProduct,
+      });
+
+      console.log(this.state.recommandationProducts);
+    }
+  }
+
+  userByEmail =(email) => {
+      axios.get('http://localhost:9092/find/'+ email )
+          .then((res) => {
+            const User = res.data;
+            this.setState({user:User});
+            console.log(this.state.user);
+            console.log(this.state.user.id);
+            console.log("UserId avant:")
+            console.log(this.state.idUser)
+            Authentification.successfulSignUp(this.state.user.id);
+            this.setState({
+              idUser: localStorage.getItem('idUser'),
+            });
+            console.log("UserId:")
+            console.log(this.state.idUser)
+          });
+    };
+    Passed = () =>{
+      console.log("passsed")
+      this.userByEmail(this.state.email);
+  }
+    submitHandler = (firstname,lastname,age,email,password) =>{
+      console.log(this.state);
+      axios.post('http://localhost:9092/user',{
+        firstname:firstname,
+        lastname:lastname,
+        age:age,
+        email:email,
+        password:password,
+
+      })
+          .then(response =>{
+            console.log(response)
+            Authentification.SaveEmail(email);
+            this.setState({
+              email: localStorage.getItem('email'),
+            });
+            console.log("Email:")
+            console.log(this.state.email)
+            this.Passed()
+          })
+          .catch(error =>{
+            console.log(error)
+          })
+    }
+
+  addAttributes = () => {
+    this.state.products.forEach((product) => {
+      product.count = 1;
+      product.total = product.prix * product.count;
+      if (
+        product.etat === "Rupture de stock" ||
+        product.etat === "Approvisionnement"
+      ) {
+        product.count = 0;
+      }
+    });
+  };
+
+  fetchProducts = async () => {
+    let res = await axios.get("http://localhost:9092/product");
+    let products = res.data;
+    this.setState({
+      products: products,
+      copyProducts: products,
+      currentPage: 1,
+    });
+    this.addAttributes();
+    this.fetchBestSellers();
+    return products;
+  };
+
+  fetchBestSellers = () => {
+    let bestSellers = this.state.products.sort((a, b) => {
+      if (a.nbVentes > b.nbVentes) return -1;
+      if (a.nbVentes < b.nbVentes) return 1;
+      return 0;
+    });
+
+    bestSellers = bestSellers.slice(0, 4);
+
+    this.setState({ bestSellers });
+  };
+
+  searchProduct = (e, search) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:9092/product/search", {
+        text: search,
+      })
+      .then((res) => {
+        const products = res.data;
+        this.setState({ products });
+      });
+  };
 
   sortDateDesc = () => {
     const products = this.state.products.sort((a, b) => {
@@ -220,8 +263,8 @@ class ProductProvider extends Component {
     // this.calculatePages();
   };
 
-  fetchRecommandationProducts = (idCat, idProd) => {
-    let recommandationProducts = this.state.copyProducts.filter(
+  fetchRecommandationProducts = (idCat, idProd, products) => {
+    let recommandationProducts = products.filter(
       (product) => product.idCat === idCat
     );
 
@@ -232,14 +275,21 @@ class ProductProvider extends Component {
     this.setState({ recommandationProducts });
   };
 
-  componentDidUpdate = () => {
-    this.calculatePages();
-  };
+  componentDidMount = async () => {
+    const products = await this.fetchProducts();
+    console.log(products);
+    const storeDetailProduct = JSON.parse(
+      localStorage.getItem("detailProduct")
+    );
+    if (!_.isEmpty(storeDetailProduct)) {
+      this.fetchRecommandationProducts(
+        storeDetailProduct.idCat,
+        storeDetailProduct.id,
+        products
+      );
+    }
 
-  componentDidMount = () => {
-    this.fetchProducts();
-    this.fetchFavoris();
-
+    console.log(this.state.recommandationProducts);
   };
 
   getItem = (id) => {
@@ -250,6 +300,7 @@ class ProductProvider extends Component {
   handleDetail = (id) => {
     const product = this.getItem(id);
     this.setState(() => {
+      localStorage.setItem("detailProduct", JSON.stringify(product));
       return { detailProduct: product };
     });
   };
@@ -404,12 +455,13 @@ class ProductProvider extends Component {
           searchProduct: this.searchProduct,
           fetchProducts: this.fetchProducts,
           filterProductsByIdCat: this.filterProductsByIdCat,
-          AddFavoris :this.AddFavoris,
-          fetchFavoris :this.fetchFavoris,
-          DeleteFavoris :this.DeleteFavoris,
           submitHandler :this.submitHandler,
           userByEmail :this.userByEmail,
           Passed : this.Passed,
+          SignIn : this.SignIn,
+          submitHandler :this.submitHandler,
+          userByEmail :this.userByEmail,
+           Passed : this.Passed,
         }}
       >
         {this.props.children}

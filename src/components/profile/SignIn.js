@@ -3,21 +3,17 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CourseDataService from '../../service/CourseDataService'
 
 import axios from 'axios'
+import {Link} from "react-router-dom";
+import {ProductConsumer} from "../globalData/Context";
 const INSTRUCTOR = 'foreverbio'
 
 class signIn extends Component {
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
+    state = {
             email: '',
             password: ''
         }
 
-        this.onSubmit = this.onSubmit.bind(this)
-        this.validate = this.validate.bind(this)
-    }
 
     componentDidMount() {
 
@@ -61,30 +57,6 @@ class signIn extends Component {
         console.log(values);
     }
 
-    submitHandler = e =>{
-        //const {email,password}=this.state();
-        let errors = {}
-        e.preventDefault();
-        console.log(this.state);
-        axios.post('http://localhost:9092/signIn',this.state)
-            .then(response => {
-
-                console.log(response.data)
-                if ( response.data==='authentification réussite') {
-                    // eslint-disable-next-line no-undef
-                    window.open("https://foreverbio.netlify.com/");
-                }else{
-                    alert("Email or password not correct");
-                }
-            })
-            .catch(error =>{
-                console.log(error)
-            })
-
-
-    }
-
-
 
     changerHandler = e =>{
         this.setState({[e.target.name]:e.target.value})
@@ -122,8 +94,9 @@ class signIn extends Component {
                             validate={this.validate}
                             enableReinitialize={true}
                         >
-                            {
-                                (props) => (
+                            <ProductConsumer>
+                                {(value) => {
+                                    return(
                                     <footer>
                                         <Form onSubmit={this.submitHandler}>
                                             <ErrorMessage name="password" component="div"
@@ -145,17 +118,20 @@ class signIn extends Component {
                                             </div>
 
                                             <div className="form-group text-center">
-                                                <button to={"/Favoris"} className="ps-btn" type={onsubmit}>
-                                                    Se connecter
-                                                </button>
-
+                                                <Link to={"/"}
+                                                      onClick={() => value.SignIn(email,password)}>
+                                                    <button  class="ps-btn" type={onsubmit}>
+                                                        Sinscrire
+                                                    </button>
+                                                </Link>
                                             </div>
 
 
                                         </Form>
                                     </footer>
-                                )
-                            }
+                                    );}
+                                }
+                            </ProductConsumer>
                         </Formik>
 
                     </div>
