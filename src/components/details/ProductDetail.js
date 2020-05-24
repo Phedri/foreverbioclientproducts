@@ -309,29 +309,31 @@ export default class ProductDetail extends Component {
                                               <div style={{ width: "900px", marginLeft:"30px", border: "green" , border: "3px double green"}}>
                                               { this.state.comments.map(comment => {
                                                return (
-                                               		<div id="comm"  style={{ width: "750px",height: "90px", marginLeft:"50px", marginTop:"10px"}}>
-                                                               {(() => {
-                                                               if (localStorage.getItem('idUser')==comment.user.id) {
-                                                                      return ( <><div style={{width: "80%"}}>
-                                                                               		<img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
-                                                                               	 </div>
-                                                                               	 <div style={{marginLeft: "50px"}}>
-                                                                               			 <p class="form-control"><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm} </p>
-                                                                               			 <div style={{ marginLeft:"87%", marginTop:"-7%" }}>
-                                                                               			     <Button variant="danger" size="sm" onClick={this.deleteComment.bind(this, comment.id)}><FontAwesomeIcon icon={faTrash} style={{width:'10px'}}/></Button>
-                                                                               			 </div>
-                                                                               	</div>
-                                                                               </> ) }
-                                                               else {
-                                               		       return ( <><div>
-                                                                         <img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
-                                                                      </div>
-                                                                      <div style={{marginLeft: "50px"}}>
-                                                                         <p class="form-control"><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm}     </p>
-                                                                      </div>
+                                               		<div  style={{ width: "750px",height: "70px", marginLeft:"50px", marginTop:"7px",background:"#e4e4e4"}}>
+                                                           {(() => {
+                                                            if (localStorage.getItem('idUser')==comment.user.id) {
+                                                                  return ( <><div style={{marginLeft:"25px"}}>
+                                                                               	<img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",marginTop:"3px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                             </div>
+
+                                                                             <div style={{marginLeft: "50px"}}>
+                                                                               	 <p><div style={{width:"650px",float:"left", marginTop:"15px"}}><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm} </div></p>
+                                                                               	<div>
+                                                                                    <Button style={{marginTop:"20px"}}variant="danger" size="sm" onClick={this.deleteComment.bind(this, comment.id)}><FontAwesomeIcon icon={faTrash} style={{width:'10px'}}/></Button>
+                                                                                  </div>
+
+                                                                             </div> </> ) }
+                                                            else {
+                                               		             return ( <><div style={{marginLeft:"25px"}} >
+                                                                                <img src={comment.user.url}  style={{ marginTop:"3px",width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                            </div>
+                                                                            <div style={{marginLeft: "50px"}}>
+                                                                                 <p style={{ width:"650px",float:"left", marginTop:"15px"}}><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm}     </p>
+                                                                            </div>
                                                                                                                                                    </> )}
                                                                       })()}
-                                                            </div> );} )}
+                                                            </div>
+                                               		 );} )}
                                                 <br/>
                                                 </div>
                                                <div>
