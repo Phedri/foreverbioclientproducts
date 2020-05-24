@@ -303,6 +303,7 @@ export default class ProductDetail extends Component {
                                                 <p>{value.detailProduct.description}</p>
                                                 <p>{value.detailProduct.source}</p>
                                               </div>
+
                                               <div class="tab-pane" role="tabpanel" id="tab_02">
                                               <h3 style={{color: "green"}}>Les commentaires : <br/><br/><br/></h3>
                                               <div style={{ width: "900px", marginLeft:"30px", border: "green" , border: "3px double green"}}>
@@ -334,6 +335,8 @@ export default class ProductDetail extends Component {
                                                 <br/>
                                                 </div>
                                                <div>
+
+
                                                 <form
                                                   class="ps-product__review"
                                                   onSubmit={this.handleSubmit} >
