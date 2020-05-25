@@ -315,10 +315,9 @@ export default class ProductDetail extends Component {
                                                                   return ( <><div style={{marginLeft:"25px"}}>
                                                                                	<img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",marginTop:"3px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
                                                                              </div>
-
                                                                              <div style={{marginLeft: "50px"}}>
                                                                                	 <p><div style={{width:"650px",float:"left", marginTop:"15px"}}><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm} </div></p>
-                                                                               	<div>
+                                                                               	  <div>
                                                                                     <Button style={{marginTop:"20px"}}variant="danger" size="sm" onClick={this.deleteComment.bind(this, comment.id)}><FontAwesomeIcon icon={faTrash} style={{width:'10px'}}/></Button>
                                                                                   </div>
 
