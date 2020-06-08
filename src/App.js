@@ -12,6 +12,8 @@ import ProductDetail from "./components/details/ProductDetail";
 import CheckoutPage from "./components/order/checkout"
 import ValidateOrder from "./components/order/validateOrder"
 import ThankYouPage from "./components/order/thankyouPage"
+import Blog from "./components/Blog/Blog"
+import Post from "./components/Blog/Post"
 
 
 import ScrollToTop from "./ScrollToTop";
@@ -41,6 +43,10 @@ function App() {
             <Route path="/thankyouPage">
               <ThankYouPage />
             </Route>
+            <Route path="/forum">
+              <Blog />
+            </Route>
+            <Route path="/post/:id"  render={(props) => <Post {...props}/> }/>
           </Switch>
 
           <Footer />
