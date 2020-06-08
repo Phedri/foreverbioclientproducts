@@ -71,7 +71,7 @@ class ProductProvider extends Component {
   };
 
   connectUser = async (email,password) => {
-    let res = await axios.post("http://localhost:9092/signIn",{
+    let res = await axios.post("http://localhost:8080/signIn",{
       email: email,
       password: password,
     });
@@ -91,7 +91,7 @@ class ProductProvider extends Component {
   }
 
   signUpUser = async (email,firstName,lastName,password,birthDate,url) => {
-    await axios.post("http://localhost:9092/user",{
+    await axios.post("http://localhost:8080/user",{
       email: email,
       password: password,
       firstName:firstName,
@@ -110,7 +110,7 @@ class ProductProvider extends Component {
   }
 
   fetchProducts = async () => {
-    let res = await axios.get("http://localhost:9092/product");
+    let res = await axios.get("http://localhost:8080/product");
     let products = res.data;
     this.setState({
       products: products,
@@ -136,7 +136,7 @@ class ProductProvider extends Component {
 
   addCommande = (commande) => {
     console.log("tried to add command");
-    axios.post("http://localhost:9092/users/22/commandes", 
+    axios.post("http://localhost:8080/users/22/commandes", 
       commande
     );
     localStorage.setItem("cart", JSON.stringify([]));
@@ -149,7 +149,7 @@ class ProductProvider extends Component {
   searchProduct = (e, search) => {
     e.preventDefault();
     axios
-      .post("http://localhost:9092/product/search", {
+      .post("http://localhost:8080/product/search", {
         text: search,
       })
       .then((res) => {

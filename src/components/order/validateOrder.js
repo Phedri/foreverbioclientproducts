@@ -146,15 +146,15 @@ export default class ValidateOrder extends Component {
                         <h3>
                           Prix Total: <span>{value.cartSubTotal}DH</span>
                         </h3>
-                        {(value.cartToCommande.paymentMethod=="Paiement en ligne") ? 
+                        {(value.cartToCommande.paymentMethod==="Paiement en ligne") ? 
                         <Link to="/paymentPage">
                         <button className="ps-btn danger" onClick={()=> {
                             console.log("U clicked");
-                            console.log(value.cartToCommande.paymentMethod);
+                            console.log("FUCK OFF" +value.cartToCommande.paymentMethod);
                             value.addCommande(value.cartToCommande())}}>
                          Valider ordre<i class="ps-icon-next"></i>
                         </button></Link> : 
-                        <Link to="/thankyouPage">
+                        <Link to="/paymentPage">
                         <button className="ps-btn danger" onClick={()=> {
                             
                             console.log("U clicked");

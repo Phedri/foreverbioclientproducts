@@ -12,6 +12,7 @@ import ProductDetail from "./components/details/ProductDetail";
 import CheckoutPage from "./components/order/checkout"
 import ValidateOrder from "./components/order/validateOrder"
 import ThankYouPage from "./components/order/thankyouPage"
+import PaymentPage from "./components/order/paymentPage"
 
 
 import ScrollToTop from "./ScrollToTop";

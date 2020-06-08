@@ -40,7 +40,7 @@ export default class ProductDetail extends Component {
     }
 
     deleteComment = (commentId) =>
-         {        axios.delete("http://localhost:9092/comment/"+ commentId)
+         {        axios.delete("http://localhost:8080/comment/"+ commentId)
                   .then(response => {
                   if(response.data != null){
                   this.setState({
@@ -55,7 +55,7 @@ export default class ProductDetail extends Component {
      event.preventDefault()
      axios({
                                  method: 'POST',
-                                 url: 'http://localhost:9092/comment/add/'+localStorage.getItem('idUser'),
+                                 url: 'http://localhost:8080/comment/add/'+JSON.parse(localStorage.getItem('user')).id,
                                  data: {
                                           rating: this.state.rating,
                                           comm: this.state.comm,
@@ -76,7 +76,7 @@ export default class ProductDetail extends Component {
           localStorage.getItem("detailProduct")
         );
       this.setState({idProd : storeDetailProduct.id});
-      axios.get("http://localhost:9092/comments/"+storeDetailProduct.id)
+      axios.get("http://localhost:8080/comments/"+storeDetailProduct.id)
                                     .then(response => response.data)
                                     .then((data) => {
                                     this.setState({comments: data});   });
@@ -173,21 +173,21 @@ export default class ProductDetail extends Component {
                           {value.detailProduct.prix}DH{" "}
                           <del>{value.detailProduct.prix + 12}DH</del>
                         </h3>
-                        <div class="ps-product__block ps-product__quickview">
+                        <div class="ps-product_block ps-product_quickview">
                           <h4>DESCRIPTION</h4>
                           <p>{value.detailProduct.description}</p>
                         </div>
-                        <div class="ps-product__block ps-product__quickview">
+                        <div class="ps-product_block ps-product_quickview">
                           <h4>SOURCE</h4>
                           <p>{value.detailProduct.source}</p>
                         </div>
-                        <div class="ps-product__block ps-product__quickview">
+                        <div class="ps-product_block ps-product_quickview">
                           <h4>ÉTAT</h4>
                           <p style={{ fontSize: "16px", fontWeight: "bold" }}>
                             {value.detailProduct.etat}
                           </p>
                         </div>
-                        <div class="ps-product__block ps-product__size">
+                        <div class="ps-product_block ps-product_size">
                           <h4>
                             CHOISIR LA QUANTITÉ
                             <p>Quantité en STOCK: {value.detailProduct.qte}</p>
@@ -309,29 +309,37 @@ export default class ProductDetail extends Component {
                                               <div style={{ width: "900px", marginLeft:"30px", border: "green" , border: "3px double green"}}>
                                               { this.state.comments.map(comment => {
                                                return (
-                                               		<div id="comm"  style={{ width: "750px",height: "90px", marginLeft:"50px", marginTop:"10px"}}>
-                                                               {(() => {
-                                                               if (localStorage.getItem('idUser')==comment.user.id) {
-                                                                      return ( <><div style={{width: "80%"}}>
-                                                                               		<img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
-                                                                               	 </div>
-                                                                               	 <div style={{marginLeft: "50px"}}>
-                                                                               			 <p class="form-control"><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm} </p>
-                                                                               			 <div style={{ marginLeft:"87%", marginTop:"-7%" }}>
-                                                                               			     <Button variant="danger" size="sm" onClick={this.deleteComment.bind(this, comment.id)}><FontAwesomeIcon icon={faTrash} style={{width:'10px'}}/></Button>
-                                                                               			 </div>
-                                                                               	</div>
-                                                                               </> ) }
-                                                               else {
-                                               		       return ( <><div>
-                                                                         <img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
-                                                                      </div>
-                                                                      <div style={{marginLeft: "50px"}}>
-                                                                         <p class="form-control"><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm}     </p>
-                                                                      </div>
-                                                                                                                                                   </> )}
-                                                                      })()}
-                                                            </div> );} )}
+                                               		<div  style={{ width: "750px",height: "70px", marginLeft:"50px", marginTop:"7px",background:"#e4e4e4"}}>
+                                                           {(() => {
+                                                      if(JSON.parse(localStorage.getItem('user'))!=null){
+                                                            if (JSON.parse(localStorage.getItem('user')).id==comment.user.id) {
+                                                                  return ( <><div style={{marginLeft:"25px"}}>
+                                                                               	<img src={comment.user.url}  style={{ width: "50px",height: "50px", float:"left",marginLeft:"-10px",marginTop:"3px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                             </div>
+                                                                             <div style={{marginLeft: "50px"}}>
+                                                                               	 <p><div style={{width:"650px",float:"left", marginTop:"15px"}}><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm} </div></p>
+                                                                               	  <div>
+                                                                                    <Button style={{marginTop:"20px"}}variant="danger" size="sm" onClick={this.deleteComment.bind(this, comment.id)}><FontAwesomeIcon icon={faTrash} style={{width:'10px'}}/></Button>
+                                                                                  </div>
+
+                                                                             </div> </> ) }
+                                                            else {
+                                               		             return ( <><div style={{marginLeft:"25px"}} >
+                                                                                <img src={comment.user.url}  style={{ marginTop:"3px",width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                            </div>
+                                                                            <div style={{marginLeft: "50px"}}>
+                                                                                 <p style={{ width:"650px",float:"left", marginTop:"15px"}}><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm}     </p>
+                                                                            </div>
+                                                                                                                                                   </> )}}
+                                              else {
+                                                    return ( <><div style={{marginLeft:"25px"}} >
+                                                                   <img src={comment.user.url}  style={{ marginTop:"3px",width: "50px",height: "50px", float:"left",marginLeft:"-10px",overflow:"hidden","-webkit-border-radius":"50px", "-moz-border-radius":"50px","border-radius":"50px"}}/>
+                                                                </div>
+                                                                <div style={{marginLeft: "50px"}}>
+                                                                     <p style={{ width:"650px",float:"left", marginTop:"15px"}}><u> <em><strong> {comment.user.lastName} {comment.user.firstName} </strong>  a laissé un commentaire </em>  </u> :     {comment.comm}     </p>
+                                                                </div> </> )} })()}
+                                                            </div>
+                                               		 );} )}
                                                 <br/>
                                                 </div>
                                                <div>
@@ -346,7 +354,7 @@ export default class ProductDetail extends Component {
                                                   </div>
                                                   <div>
                                                           {(() => {
-                                                            if (localStorage.getItem('idUser')==null) {
+                                                            if (JSON.parse(localStorage.getItem('user')) ==null) {
                                                               return (
                                                                 <div> <h4>Connectez-vous pour nous laisser un commentaire .</h4></div>
                                                               )
