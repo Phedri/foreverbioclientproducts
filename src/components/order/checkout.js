@@ -99,26 +99,6 @@ export default class CheckoutPage extends Component {
                                                     }} />
                                                 </div>
                                             <hr></hr>
-
-                                                <h3 style={{
-                                                textAlign: "center",
-                                            }}><i class="fas fa-money-check-alt"></i> Méthode de paiement</h3>
-                                            <hr></hr>
-                                            <Form>
-                                                <FormGroup>
-      
-        <div>
-          <div className="row" style={{
-          }}>< CustomInput type="radio"  className="column" id="exampleCustomRadio" name="customRadio" label=" Paiement à la livraison" style={{
-
-          }}/> 
-          <CustomInput type="radio" id="exampleCustomRadio2" name="customRadio" label=" Paiement en ligne"  className="column"/>
-          
-          </div>
-         
-        </div>
-      </FormGroup>
-      </Form>
                                             </div>
 
 

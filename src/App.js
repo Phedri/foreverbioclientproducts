@@ -41,6 +41,9 @@ function App() {
             <Route path="/thankyouPage">
               <ThankYouPage />
             </Route>
+            <Route path="/paymentPage">
+              <PaymentPage />
+            </Route>
           </Switch>
 
           <Footer />
