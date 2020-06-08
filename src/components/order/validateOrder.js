@@ -103,6 +103,25 @@ export default class ValidateOrder extends Component {
                         ))}
                       </tbody>
                     </table>
+                    <h3 style={{
+                                                textAlign: "center",
+                                            }}><i class="fas fa-money-check-alt"></i> Méthode de paiement</h3>
+                                            <hr></hr>
+                                            <Form>
+                                                <FormGroup>
+      
+        <div>
+          <div className="row" style={{
+          }}>< CustomInput type="radio"  className="column" id="exampleCustomRadio" name="customRadio" label="Paiement en ligne"  onChange={()=> {value.cartToCommande.paymentMethod="A la livraison"}} style={{
+
+          }}/> 
+          <CustomInput type="radio" id="exampleCustomRadio2" name="customRadio" label=" Paiement à la livraison" onChange={()=> {value.cartToCommande.paymentMethod="Paiement en ligne"}} className="column"/>
+          
+          </div>
+         
+        </div>
+      </FormGroup>
+      </Form>
                               <ProductConsumer>{(value) => (<div class="ps-cart__actions">
                       <div className="ps-cart__promotion">
                         <div className="form-group">
@@ -127,15 +146,26 @@ export default class ValidateOrder extends Component {
                         <h3>
                           Prix Total: <span>{value.cartSubTotal}DH</span>
                         </h3>
+                        {(value.cartToCommande.paymentMethod=="Paiement en ligne") ? 
+                        <Link to="/paymentPage">
+                        <button className="ps-btn danger" onClick={()=> {
+                            console.log("U clicked");
+                            console.log(value.cartToCommande.paymentMethod);
+                            value.addCommande(value.cartToCommande())}}>
+                         Valider ordre<i class="ps-icon-next"></i>
+                        </button></Link> : 
                         <Link to="/thankyouPage">
                         <button className="ps-btn danger" onClick={()=> {
                             
                             console.log("U clicked");
+                            console.log(value.cartToCommande.paymentMethod);
                             value.addCommande(value.cartToCommande())}}>
                          Valider ordre<i class="ps-icon-next"></i>
-                        </button></Link>
+                        </button></Link> }
+
                       </div>
                     </div>)}</ProductConsumer>
+                    
                     
                   </div>
                 </div>

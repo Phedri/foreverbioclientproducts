@@ -43,10 +43,16 @@ function App() {
             <Route path="/thankyouPage">
               <ThankYouPage />
             </Route>
+
             <Route path="/forum">
               <Blog />
             </Route>
             <Route path="/post/:id"  render={(props) => <Post {...props}/> }/>
+
+            <Route path="/paymentPage">
+              <PaymentPage />
+            </Route>
+
           </Switch>
 
           <Footer />
